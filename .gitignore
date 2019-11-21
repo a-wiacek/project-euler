@@ -1,5 +1,5 @@
 .stack-work/
 project-euler.cabal
-test/Simulations
-!test/Simulations/.keep
+test/Solutions
+!test/Solutions/.keep
 *~
