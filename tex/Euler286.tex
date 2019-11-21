@@ -1,0 +1,20 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 286}
+\vspace{5ex}
+
+The probability generating function of practice run is
+
+\[\prod_{n = 1}^{50} \left( \left(1 - \frac{n}{q}\right)x + \frac{n}{q} \right)\]
+
+The probability of scoring exactly 20 points is equal to coefficient standing next to \(x^{20}\). This line in Mathematica computes it:
+
+\texttt{FindRoot[Coefficient[Product[(1 - n / q) * x + n / q, {n, 1, 50}] /. q -> t, x, 20] - 0.02, {t, 52}, WorkingPrecision -> 12]}
+
+\vspace{5ex}
+\textbf{Answer:}
+52.6494571953
+\end{document}

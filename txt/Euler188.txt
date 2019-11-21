@@ -1,0 +1,3 @@
+Plugging 1777 mod 10^8, 1777^1777 mod 10^8, 1777^1777^1777 mod 10^8, ...
+into WolframAlpha, one can see, that the sequence eventually stabilizes:
+95962097

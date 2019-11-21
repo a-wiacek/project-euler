@@ -1,0 +1,41 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 100}
+\vspace{5ex}
+
+
+Let \(b\) be amount of blue discs and \(r\) amount of red discs. We want
+\[\frac{b}{b + r} \cdot \frac{b - 1}{b + r - 1} = \frac{1}{2}\]
+\[2b^2-2b=(b+r)(b+r-1)\]
+\[b^2 - b(1 + 2r) + r - r^2 = 0\]
+\[\Delta = (1 + 2r)^2 - 4(r - r^2) = 8r^2 + 1 > 0\]
+\[b = \frac{1 + 2r + \sqrt{8r^2 + 1}}{2} \text{ (we omit negative solution)}\]
+
+When is \(\sqrt{8r^2 + 1}\) integer?
+\[\sqrt{8r^2 + 1} = n \leftrightarrow r = \sqrt{\frac{n^2 - 1}{8}}\]
+One can see that if \(n\) is even, fraction is not an integer.
+Let \(n = 2k + 1\). Then \(r = \sqrt{\dfrac{k(k + 1)}{2}}\).
+We are looking for numbers which are both triangular and square.
+Luckily, there is a sequence \texttt{A001110} in OEIS that contains
+those numbers. Let \(S_m\) denote \(m\)-th element of this sequence.
+Then we have
+\[r = \sqrt{S_m} \text{ and }
+b = \frac{1 + 2\sqrt{S_m} + \sqrt{8S_m + 1}}{2}\]
+We want to solve inequality
+\[r + b > 10^{12}\]
+\[\sqrt{S_m} + \frac{1 + 2\sqrt{S_m} + \sqrt{8S_m + 1}}{2} > 10^{12}\]
+
+OEIS page lists only first 16 elements of sequence and
+\(S_{15} = 2893284510173841030625\) does not satisfy inequality, but we can
+compute next elements from recursive formula:
+\(S_n = 34 * S_{n - 1} - S_{n - 2} + 2\)
+
+Inequality holds for \(S_{16} = 98286503002057414584576\)
+and \(b = 756872327473\).
+
+\vspace{5ex}
+\textbf{Answer:}
+756872327473
+\end{document}

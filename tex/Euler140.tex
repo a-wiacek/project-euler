@@ -1,0 +1,32 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 140}
+\vspace{5ex}
+
+Let \(d_n = G_{n + 1}\) for \(n \geq 0\), \(d_n = 0\) for \(n < 0\) and \(D(x) = A_G(x) / x\), then \(D\) is generating function for \(D_n\).
+
+\[d_n = d_{n - 1} + d_{n - 2}, d_0 = 1, d_1 = 4\]
+
+Using Iverson bracket, we can put it into one equation:
+
+\[d_n = d_{n - 1} + d_{n - 2} + [n = 0] + 3[n = 1]\]
+
+Multiplying equation by \(x^n\) and summing for all \(n \in \mathbb{N}\), we get:
+
+\[D(x) = xD(x) + x^2D(x) + 3x + 1\]
+\[D(x) = \frac{3x + 1}{1 - x - x^2} \implies A_G(x) = \frac{3x^2+x}{1-x-x^2}\]
+
+We want to find rational solutions for equation
+\[\frac{3x^2+x}{1-x-x^2} = n \geq 1\]
+\[(3+n)x^2 + (1 + n)x - n = 0\]
+\[\Delta = (1 + n)^2 + 4(3+n)n = n^2 + 2n + 1 + 12n + 4n^2 = 5n^2 + 14n + 1\]
+
+\(x \in \mathbb{Q}\) iff \(5n^2 + 14n + 1\) is a square of natural number.
+
+\[5n^2 + 14n + 1 = y^2\]
+Using diophantine quadratic solver https://www.alpertron.com.ar/QUAD.HTM, we get solutions.
+
+\end{document}

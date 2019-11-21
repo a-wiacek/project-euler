@@ -1,0 +1,59 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 312}
+\vspace{5ex}
+
+Explicit formula from \texttt{http://oeis.org/A246959}.
+
+Notation: \(A(n) = \dfrac{3^{n - 2} - 3}{2}, C(n) = 8 \cdot 12^{A(n)}, c_0 = 10000, c_1 = C(c_0), c_2 = C(c_1), c_3 = C(c_2)\), [ET]: Euler's theorem, [CRT]: Chinese remainder theorem.
+
+Observation: \(A(n) \mod 12 = 3[n \text{ mod } 2 = 0]\) and \(C(n) \text{ mod } 12 = 0\).
+
+\vspace{3ex}
+
+Goal: Compute \(c_3 = 8 \cdot 12^{A(c_2)} \mod 13^8\).
+
+Goal: Find small \(a_3\) such that \(12^{A(c_2)} = 12^{a_3} \mod 13^8\).
+
+[ET] Goal: Compute \(A(c_2) \mod \varphi(13^8) = 13^7 \cdot 12\).
+
+[CRT] Goal: Compute \(b_2 = A(c_2) \mod 13^7\).
+
+\(18b_2 + 27 = 3^{c_2} \mod 13^7\)
+
+Goal: Find small \(d_2\) such that \(3^{d_2} = 3^{c_2} \mod 13^7\).
+
+[ET] Goal: Compute \(c_2 \mod \varphi(13^7) = 13^6 \cdot 12\).
+
+[CRT] Goal: Compute \(c_2 = 8 \cdot 12^{A(c_1)} \mod 13^6\).
+
+Goal: Find small \(a_2\) such that \(12^{A(c_1)} = 12^{a_2} \mod 13^6\).
+
+[ET] Goal: Compute \(A(c_1) \mod 13^5 \cdot 12\).
+
+[CRT] Goal: Compute \(b_1 = A(c_1) \mod 13^5\).
+
+\(18b_1 + 27 = 3^{c_1} \mod 13^5\)
+
+Goal: Find small \(d_1\) such that \(3^{d_1} = 3^{c_1} \mod 13^5\).
+
+[ET] Goal: Compute \(c_1 \mod \varphi(13^5) = 13^4 \cdot 12\).
+
+[CRT] Goal: Compute \(c_1 = 8 \cdot 12^{A(c_0)} \mod 13^4\).
+
+Goal: Find small \(a_1\) such that \(12^{A(c_0)} = 12^{a_1} \mod 13^4\).
+
+[ET] Goal: Compute \(A(c_0) \mod 13^3 \cdot 12\).
+
+[CRT] Goal: Compute \(b_0 = A(c_0) \mod 13^3\).
+
+\(18b_0 + 27 = 3^{c_0} = 3^{10000} \mod 13^3\)
+
+Goal: Find small \(d_0\) such that \(3^{d_0} = 3^{c_0} \mod 13^3\).
+
+[ET] Goal: \(d_0 = c_0 \mod 13^2 \cdot 12\)
+
+\end{document}

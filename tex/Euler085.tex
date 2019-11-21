@@ -1,0 +1,19 @@
+\documentclass[a4paper,12pt]{article}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 85}
+\vspace{5ex}
+
+
+Given rectangular grid of size \(A \times B\), we can count all rectangles
+by size:
+
+\[\sum_{i = 1}^A \sum_{j = 1}^B (A - i + 1)(B - j + 1) =
+\sum_{i = 1}^A (A - i + 1) \frac{B(B + 1)}{2} =
+\frac{A(A + 1)}{2} \cdot \frac{B(B + 1)}{2}\]
+
+Amount of rectangles is equal to product of two triangle numbers.
+We can generate all triangle numbers less than 2000000 and check all
+their products.
+
+\end{document}

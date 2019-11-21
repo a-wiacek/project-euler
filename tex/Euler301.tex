@@ -1,0 +1,44 @@
+\documentclass[a4paper,12pt]{article}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 301}
+\vspace{5ex}
+
+\(X = \oplus\) is xor.
+
+Let \(b_1 b_2 \dots b_k\) be binary representation of \(n\).
+
+Then \(b_1 b_2 \dots b_k 0\) is binary representation of \(2n\).
+
+Since always \(n \oplus 2n \leq 3n\), we can check when equality holds.
+
+For this, there must be \(n \ AND \ 2n = 0 \leftrightarrow
+b_i \ AND \ b_{i + 1} = 0\). There must also be \(b_1 = 1\), so \(b_2 = 0\).
+Let \(X_m\) denote number of correct integers, which have \(m\) digits
+in their binary form. We have \(X_1 = X_2 = X_{31} = 1\).
+
+For \(1 \leq m \leq 28\) we are counting 0 and 1-sequences of length \(m\)
+with no two 1s in a row. Let \(X_{m + 2} = a_m + b_m\),
+where \(a_m\) is number of sequences of length \(m\) with last digit \(0\)
+and \(b_m\) is number of sequences of length \(m\) with last digit \(1\).
+
+Base values are \(a_1 = b_1 = 1\).
+Recursive formulas are \(b_{m + 1} = a_m\) (we can't put two 1s in a row)
+and \(a_{m + 1} = a_m + b_m\).
+
+One can notice that \(a_m = F_{m + 1}\) and \(b_m = F_m\), where \(F_m\)
+is Fibonacci sequence with base values \(F_1 = F_2 = 1\). Therefore:
+
+\[\sum_{k = 1}^{28} X_{k + 2} = \sum_{k = 1}^{28} a_k + b_k = \sum_{k = 1}^{28} F_{k + 2} =
+\sum_{k = 1}^{30} F_k - 2 = F_{32} - 3\]
+
+Finally:
+
+\[\sum_{k = 1}^{31} X_k = X_1 + X_2 + \sum_{k = 3}^{30} X_k + X_{31} = F_{32}
+= 2178309\]
+
+
+\vspace{5ex}
+\textbf{Answer:}
+2178309
+\end{document}

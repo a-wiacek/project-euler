@@ -1,0 +1,11 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 173}
+\vspace{5ex}
+
+Let \(S(l)\) be amount of squares used to build simple lamina (of thickness 1) and side of length \(l\). This is well defined for \(l \geq 3\) and \(S(l) = 4l - 4\).
+
+Let \(L(l, t)\) be amount of squares used to build lamina of thickness \(t\) and outer side of length \(l\). This is well defined when \(l > 2t\). We have \(L(l, t) = \sum_{k = 1}^t S(l - 2k + 2) = \sum_{k = 1}^t 4(l - 2k + 2) - 4 = \sum_{k = 1}^t (4l + 4) - \sum_{k = 1}^t 8k = t(4l + 4) - 4t(t+1) = 4lt - 4t^2 = 4t(l-t) \)
+\end{document}

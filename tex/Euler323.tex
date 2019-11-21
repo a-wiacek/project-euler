@@ -1,0 +1,20 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 323}
+\vspace{5ex}
+
+For \(i \in \{1, \dots, 32\}\) let \(N_i\) be a random variable: the lowest index for which \(i\)-th bit of \(x\) is set to 1. Variables \(N_i\) are independent, since we choose each bit of each \(y\) independently and \(N = \max N_i\). All \(N_i\) have the same distribution: for \(k \geq 1\) \(\mathbb{P}(N_i = k) = 2^{-k}\), so \(\mathbb{P}(N_i \leq k) = 1 - 2^{-k}\). Then:
+
+\[\mathbb{P}(N \leq k) = \mathbb{P}(\forall i. N_i \leq k) = \prod_i \mathbb{P}(N_i \leq k) = (1-2^{-k})^{32}\]
+\[\mathbb{P}(N = k) = \mathbb{P}(N \leq k) - \mathbb{P}(N \leq k - 1) = (1-2^{-k})^{32} - (1-2^{1-k})^{32}\]
+\[\mathbb{E}P = \sum_{k = 1}^\infty k\mathbb{P}(N = k) = \sum_{k = 1}^\infty k((1-2^{-k})^{32} - (1-2^{1-k})^{32})\]
+
+Plugging this formula into WolframAlpha, we get result.
+
+\vspace{5ex}
+\textbf{Answer:}
+6.3551758451
+\end{document}

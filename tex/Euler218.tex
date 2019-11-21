@@ -1,0 +1,21 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 218}
+\vspace{5ex}
+
+Every perfect right angled triangle is super-perfect. Since triangle is primitive, let \(a = m^2 - n^2, b = 2mn, c^2 = m^2 + n^2\) be lengths of triangle sides, where \(m\) and \(n\) are coprime and of distinct parity. We have another pythagorean triple \((m, n, c)\), so \(m = k(s^2 - t^2)\) and \(n = 2kst\). We want to prove that \(3 \cdot 4 \cdot 7 = 84 \mid \frac{ab}{2} = (m^2 - n^2)mn = k^4(s^2 - t^2 - 2st)(s^2 - t^2 + 2st)(s - t)(s + t)2st\), where \(s\) and \(t\) are coprime and of distinct parity. We have 3 subtasks:
+\begin{itemize}
+\item \(3 \mid (s^2 - t^2 - 2st)(s^2 - t^2 + 2st)(s - t)(s + t)2st\)
+
+Suppose that neither \(s\) nor \(t\) are divisible by 3. Then either \(s \equiv t\) mod 3 and \(3 \mid s - t\) or one is equal to 1 modulo 3 and other one is equal to 2 modulo 3, so \(3 \mid s + t\).
+\item \(4 \mid (s^2 - t^2 - 2st)(s^2 - t^2 + 2st)(s - t)(s + t)2st\)
+
+Obvious, since either \(s\) or \(t\) is even, so \(4 \mid 2st\).
+\item \(7 \mid (s^2 - t^2 - 2st)(s^2 - t^2 + 2st)(s - t)(s + t)2st\)
+
+All 49 cases (including the impossible one \((0, 0)\)) for remainders of \(x\) and \(y\) are checked by code.
+\end{itemize}
+\end{document}

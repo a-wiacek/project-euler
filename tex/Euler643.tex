@@ -1,0 +1,25 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 643}
+\vspace{5ex}
+
+Let \(\Phi(n) = \sum_{i = 1}^n \varphi(n)\), where \(\varphi\) is totient function. Then:
+
+Let also \(F(n) = \left| \{ (a, b): 1 \leq a < b \leq n, \gcd(a, b) = 1\} \right| = \)
+
+\(= \sum_{i = 2}^n \left| \{a: 1 \leq a < i, \gcd(a, i) = 1\} \right| = \sum_{i = 2}^n \varphi(i) = \Phi(n) - 1\) and \(F(0) = 0\).
+
+Finally: \(f(n) = \left| \{ (p, q): 1 \leq p < q \leq n, \exists t: \gcd(p, q) = 2^t\} \right| = \)
+
+\(= \sum_{t = 1}^\infty \left| \{ (p, q): 1 \leq p < q \leq n, \gcd(p, q) = 2^t\} \right| =\)
+
+\(= \sum_{t = 1}^\infty \left| \{ (a, b): 1 \leq a < b \leq 2^{-t}n, \gcd(a, b) = t\} \right| =\)
+
+\(= \sum_{t = 1}^\infty F\left(\lfloor 2^{-t}n \rfloor\right)\)
+
+This sum is finite, since almost all arguments of function \(F\) are equal to 0.
+
+\end{document}

@@ -1,0 +1,13 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\e}{\mathbb{E}}
+\newcommand{\p}{\mathbb{P}}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 342}
+\vspace{5ex}
+
+Let \(n = \prod_{i = 1}^k p_i^{a_i}\) with \(p_1 < p_2 < \dots < p_k\). Then we have \(\varphi(n^2) = \prod_{i = 1}^k p_i^{2a_i - 1} (p_i - 1)\). One can notice that \(p_k^{2a_k - 1}\) is coprime with all other factors in \(\varphi(n^2)\). Therefore \(a_k \equiv 2\) modulo 3.
+
+\end{document}

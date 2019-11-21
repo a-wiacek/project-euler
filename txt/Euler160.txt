@@ -1,0 +1,3 @@
+For this problem I just asked WolframAlpha:
+https://www.wolframalpha.com/input/?i=1000000000000!
+16576

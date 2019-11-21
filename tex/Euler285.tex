@@ -1,0 +1,40 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\arctg}{\operatorname{arctg}}
+\usepackage[a4paper,top=1.5cm,bottom=2cm,left=1.5cm,right=1.5cm,marginparwidth=1.75cm]{geometry}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 285}
+\vspace{5ex}
+
+If \(A \sim \text{Unif}[0, 1]\), then its probability density function is \(g(x) = 1_{[0, 1]}(x)\). To find density of \((kA+1)^2\), let's compute its cumulative distribution function:
+
+\[F_{(kA + 1)^2}(t) = \mathbb{P}((kA + 1)^2 \leq t) = 0 \text{ for } t < 1\]
+
+\[F_{(kA + 1)^2}(t) = \mathbb{P}((kA + 1)^2 \leq t) = 1 \text{ for } t \geq (k + 1)^2\]
+
+\[F_{(kA + 1)^2}(t) = \mathbb{P}((kA + 1)^2 \leq t) = \mathbb{P}(kA + 1 \leq \sqrt{t}) = \mathbb{P}\left(A \leq \frac{\sqrt{t} - 1}{k}\right) = \frac{\sqrt{t} - 1}{k}\]
+
+Therefore \(g_{(kA + 1)^2}(x) = \dfrac{d}{dx} F_{(kA + 1)^2}(x) = \dfrac{1_{[1, (k + 1)^2]}(x)}{2k\sqrt{x}}\).
+
+Obviously \(g_{(kA + 1)^2}(x) = g_{(kB + 1)^2}(x)\). To get PDF of \(S_k = (kA + 1)^2 + (kB + 1)^2\), we compute convolution of densities.
+
+\[g_{S_k}(x) = \int g_{(kA + 1)^2}(x - y) g_{(kA + 1)^2}(y) dy = \int  \frac{1_{[1, (k + 1)^2]}(x - y)}{2k\sqrt{x - y}} \frac{1_{[1, (k + 1)^2]}(y)}{2k\sqrt{y}} =\]
+\[= \frac{1}{4k^2} \int_{\max(1, x - (k + 1)^2)}^{\min(x - 1, (k + 1)^2)} \frac{dy}{\sqrt{(x - y)y}} = \frac{1}{4k^2} \left[2\arctg\left(\frac{\sqrt{y}}{\sqrt{x - y}}\right)\right]_{\max(1, x - (k + 1)^2)}^{\min(x - 1, (k + 1)^2)} =\]
+\[ =
+\begin{cases}
+0 \text{ if } x < 2 \text{ or } x \geq 2(k + 1)^2
+\\
+\dfrac{1}{2k^2} \left[\arctg\left(\dfrac{\sqrt{y}}{\sqrt{x - y}}\right)\right]_{1}^{x - 1} = \dfrac{\arctg((x - 1)^{1/2}) - \arctg((x - 1)^{-1/2})}{2k^2} \text{ if } 2 \leq x < (k+1)^2 + 1\\
+\dfrac{1}{2k^2} \left[\arctg\left(\dfrac{\sqrt{y}}{\sqrt{x - y}}\right)\right]_{x - (k + 1)^2}^{(k + 1)^2} = \dfrac{\arctg\left(\dfrac{k + 1}{\sqrt{x - (k + 1)^2}}\right) - \arctg\left(\dfrac{\sqrt{x - (k + 1)^2}}{k + 1}\right)}{2k^2}
+\end{cases}\]
+Last case happens when \((k+1)^2 + 1 \leq x < 2(k + 1)^2\).
+
+Probability that we score for chosen \(k\) is (for \(k \geq 10\) this falls completely under second case):
+
+\[\mathbb{P}\left(\left(k - \dfrac{1}{2}\right)^2 < S_k \leq \left(k + \dfrac{1}{2}\right)^2\right) = \int_{(k - \frac{1}{2})^2}^{(k + \frac{1}{2})^2} g_{S_k}(x)dx = \] \[= \int_{(k - \frac{1}{2})^2}^{(k + \frac{1}{2})^2} \dfrac{\arctg((x - 1)^{1/2}) - \arctg((x - 1)^{-1/2})}{2k^2}dx =\]
+\[=\frac{1}{2k^2} \left[ -2\sqrt{x - 1} - x \arctg((x - 1)^{1/2}) + x\arctg((x - 1)^{-1/2}\right]_{(k - \frac{1}{2})^2}^{(k + \frac{1}{2})^2}\]
+
+Therefore expected value of points scored in \(k\)-th round is \(k\mathbb{P}(k - 1/2 < S_k \leq k + 1/2)\). Since rounds are independent, expected value of total points is sum of expected values for all rounds.
+\end{document}

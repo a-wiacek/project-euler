@@ -1,0 +1,22 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\e}{\mathbb{E}}
+\newcommand{\p}{\mathbb{P}}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 137}
+\vspace{5ex}
+
+\(A_F\) is generating function of Fibonacci sequence. Its closed form is \[A_F(x) = \frac{x}{1 - x - x^2}\]
+
+We want to find rational solutions for equation \[\frac{x}{1-x-x^2} = n \geq 1\]
+\[nx^2 + (1 + n)x - n = 0\]
+\[\Delta = (1 + n)^2 + 4n^2 = 5n^2 + 2n + 1\]
+
+\(x \in \mathbb{Q}\) iff \(5n^2 + 2n + 1\) is a square of natural number.
+
+\[5n^2 + 2n + 1 = y^2\]
+Using diophantine quadratic solver https://www.alpertron.com.ar/QUAD.HTM, we get solutions.
+
+\end{document}

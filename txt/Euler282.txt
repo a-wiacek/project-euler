@@ -1,0 +1,8 @@
+Plugging into WolframAlpha 2^2 mod 14^8, 2^2^2 mod 14^8, 2^2^2^2 mod 14^8, ...
+we can see, that this sequence eventually stabilizes at 829575168.
+Form Wikipedia page we can see that Ackermann function A(m, n) for m > 3
+is just a huge tower of 2s minus 3, so A(5, 5) = A(6, 6) = 829575165 mod 14^8.
+We also have A(4, 4) = 2^2^2^2^2^2^2 - 3 mod 14^8 = 915627005 and
+A(3, 3) = 67, A(2, 2) = 7, A(1, 1) = 3, A(0, 0) = 1.
+Summing all these and taking modulo, we get result:
+1098988351

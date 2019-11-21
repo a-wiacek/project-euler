@@ -1,0 +1,12 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 245}
+\vspace{5ex}
+
+Let \(n = p_1^{a_1} \dots p_k^{a_k}\). Problem condition can be expressed as
+\[s \prod_{i = 1}^n p_i^{a_i - 1} \left(\prod_{i = 1}^n p_i - \prod_{i = 1}^n (p_i - 1)\right) = \prod_{i = 1}^n p_i^{a_i} - 1\]
+for some \(s \in \mathbb{N}\). Suppose that there exists index \(i\) such that \(a_i > 1\). Then left hand side is divisible by \(p_i\) and right hand side is not, so all \(a_i\) exponents are equal to 1.
+\end{document}

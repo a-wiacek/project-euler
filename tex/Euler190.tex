@@ -1,0 +1,14 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 190}
+\vspace{5ex}
+
+By AM-GM inequality:
+\[P_m = x_1 x_2^2 x_3^3\dots x_m^m = 2^23^3\dots m^m x_1\left(\frac{x_2}{2}\right)^2 \left(\frac{x_3}{3}\right)^3 \dots \left(\frac{x_m}{m}\right)^m \leq \]
+\[\leq 2^23^3\dots m^m \left( \frac{x_1 + \frac{x_2}{2} + \frac{x_2}{2} + \dots + \frac{x_m}{m} + \dots \frac{x_m}{m}}{1 + 2 + \dots + m}\right)^{1 + 2 + \dots + m} =\] \[= 2^23^3\dots m^m \left(\frac{2}{m + 1} \right)^{m(m+1)/2}\]
+
+Equality is achieved when \(x_1 = \dfrac{x_2}{2} = \dots = \dfrac{x_m}{m}\), so for \(x_i = \dfrac{2i}{m(m+1)}\).
+\end{document}

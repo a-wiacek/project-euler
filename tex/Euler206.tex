@@ -1,0 +1,16 @@
+\documentclass[a4paper,12pt]{article}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 206}
+\vspace{5ex}
+
+
+Let \(n^2 = 1A2B3C4D5E6F7G8H9I0\). Since \(n^2\) is divisible by 10, it
+must be divisble by 100. Therefore \(I = 0\). Let \(m = n/10\), then
+\(m^2 = 1A2B3C4D5E6F7G8H9\). We know that
+\[101010101 \approx \sqrt{10203040506070809} \leq m \leq
+\sqrt{19293949596979899} \approx 138902662\]
+and since last digit of \(m^2\) is 9, last digit of \(m\) is either 3 or 7.
+From there, we can just bruteforce our solution.
+
+\end{document}

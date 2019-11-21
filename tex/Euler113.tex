@@ -1,0 +1,34 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\everymath{\displaystyle}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 113}
+\vspace{5ex}
+
+
+\begin{enumerate}
+\item Number of non-decreasing sequences with elements from set
+\(\{1, 2, 3, 4, 5, 6, 7, 8, 9\}\) with length \(k\) is \(\binom{k + 8}{k}\)
+(\textit{stars and bars} argument).
+\item Number of non-decreasing numbers of length \(\leq 100\) is
+\(\sum_{k = 1}^{100} \binom{8 + k}{k} = \binom{8 + 100 + 1}{100} - 1
+= 4263421511270\)
+\item Number of non-increasing sequences with elements from set
+\(\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}\) with length \(k\) is \(\binom{k + 9}{k}\)
+(\textit{stars and bars} argument).
+\item Number of non-decreasing numbers of length \(\leq 100\) is
+\(\sum_{k = 1}^{100} \binom{9 + k}{k} = \binom{9 + 100 + 1}{100} - 1
+= 46897636623980\)
+\item From this we have to count out constant sequences
+(we don't want to count sequences 00\dots00 and other constant sequences
+were counted twice).
+
+There are \(\sum_{i = 1}^{100} 10 = 1000\) constant sequences.
+\item Final answer is \(4263421511270 + 46897636623980 - 1000 = 51161058134250\).
+\end{enumerate}
+
+\vspace{5ex}
+\textbf{Answer:}
+51161058134250
+\end{document}

@@ -1,0 +1,24 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 237}
+\vspace{5ex}
+
+Running simulation in secondary file, we get values of \(T(n)\) for \(n \in \{1, \dots, 10\}\). There exists unique sequence A181688 in OEIS with these values. Recursive formula: \(T(n) = 2T(n-1) + 2T(n-2) - 2T(n-3) + T(n-4)\).
+
+\[\begin{bmatrix}
+0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & -2 & 2 & 2
+\end{bmatrix}
+\cdot
+\begin{bmatrix} T(n - 4) \\ T(n - 3) \\ T(n - 2) \\ T(n - 1) \end{bmatrix}
+=
+\begin{bmatrix} T(n - 3) \\ T(n - 2) \\ T(n - 1) \\ T(n) \end{bmatrix}\]
+
+Let \(A = \begin{bmatrix}
+0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & -2 & 2 & 2
+\end{bmatrix}\).
+Then \(A^{n - 3} \cdot \begin{bmatrix} 0 \\ 1 \\ 1 \\ 4 \end{bmatrix} = \begin{bmatrix} T(n - 3) \\ T(n - 2) \\ T(n - 1) \\ T(n) \end{bmatrix}\).
+We can use fast power algorithm to compute \(A^{n - 3}\).
+\end{document}

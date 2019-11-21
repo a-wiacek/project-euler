@@ -1,0 +1,13 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 168}
+\vspace{5ex}
+
+Let \(n = 10a + b\), where \(b \in \{0, \dots, 9\}\) is last digit of \(n\) and length of \(n\) is \(k \in \{2, \dots, 100\}\). Then \(n' = b 10^{k - 1} + a\). We have \(n'/n = l \in \mathbb{N}\). Since \(n\) and \(n'\) have same length, \(l\) can't be too big: \(l \in \{1, \dots, 10\}\). We have \(b 10^{k - 1} + a = 10 a l + b l\), so:
+\[a = \frac{b (10^{k - 1} - l)}{10 l - 1}\]
+
+For all possible values of \(b, k\) and \(l\) we check whether \(a \in \mathbb{N}\) and length of \(n\) is \(k\). 
+\end{document}

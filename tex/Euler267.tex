@@ -1,0 +1,17 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 267}
+\vspace{5ex}
+
+Whenever we win, we multiply our money by \(1 + 2f\) and whenever we lose, we multiply our money by \(1 - f\). Since multiplication is commutative, order of heads and tails doesn't count. Therefore we can assume, that at first we threw \(l\) heads and then \(1000 - l\) tails. After investment we have \((1 + 2f)^l(1 - f)^{1000 - l}\). For which \(l\) is it at least \(10^9\)?
+
+\[(1 + 2f)^l (1 - f)^{1000 - l} \geq 10^9\]
+\[\left( \frac{1 + 2f}{1 - f} \right)^l \geq 10^9 \cdot (1 - f)^{-1000}\]
+\[l \ln{\frac{1 + 2f}{1 - f}} \geq 9 \ln{10} - 1000 \ln(1 - f)\]
+\[l \geq \frac{9 \ln{10} - 1000 \ln(1 - f)}{\ln{(1 + 2f)} - \ln{(1 - f)}} = F(f)\]
+
+Plugging \(F\) into WolframAlpha and asking to minimize it in interval \((0, 1)\), we get \(F_{\min} \approx 431{,}256\), so under best choice of \(f\) we still have to throw at least 432 heads. Probability of throwing \(l\) heads is \(\binom{1000}{l}2^{-1000}\).
+\end{document}

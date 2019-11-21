@@ -1,0 +1,53 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 233}
+\vspace{5ex}
+
+Let \(i\)-prime be a prime number equal to \(i\) modulo 4 and let \(i\)-divisor of \(n\) be a number \(n'\) such that \(n' \mid n\) and \(n' \equiv i\) modulo 4.
+
+Here, will use following theorem: The number of ways of expressing \(n\) as sum of two squares is \(4D(n)\), where \(D(n) = d_1(n) - d_3(n)\) and \(d_i(n)\) is the number of \(i\)-divisors of \(n\).
+[I. Niven, H. S. Zuckerman and H. L. Montgomery, An Introduction to the Theory of Numbers, Fifth Edition, John Wiley \& Sons, 1991, pp. 166-167]
+
+We are looking for points \((a, b) \in \mathbb{Z}^2\) such that \((a - N/2)^2 + (b - N/2)^2 = N^2/2\). We have two cases:
+
+\textbf{Case 1:} \(N\) is odd.
+
+Multiplying this equation by 4, we have \((2a - N)^2 + (2b - N)^2 = 2N^2\). Suppose that we found integers \(p\) and \(q\) such that \(p^2 + q^2 = 2N^2\). Since we want to say that \(a = \dfrac{p + N}{2}\) and \(b = \dfrac{q + N}{2}\), we have to check if \(p\) and \(q\) are odd. Suppose that it's not true:
+\begin{itemize}
+\item Only one of them is odd. Then LHS is odd as sum of odd and even number, but RHS is even.
+\item Both \(p\) and \(q\) are even. Then LHS is divisible by 4, but RHS not (only by 2).
+\end{itemize}
+
+Therefore all solutions are correct. To count them, we use mentioned theorem. Let \(N = \prod_{i = 1}^k p_i^{a_i} \prod_{j = 1}^l q_j^{b_j}\), where \(p_*\) are 1-primes and \(q_*\) are 3-primes. Then: \[2N^2 = 2 \prod_{i = 1}^k p_i^{2a_i} \prod_{j = 1}^l q_j^{2b_j}\]
+Now we will prove that \(D(2N^2) = \prod_{i = 1}^k(2a_i + 1)\) in a following way:
+\begin{itemize}
+\item It is obviuos that \(d_1(2N^2) = d_1(N^2)\) and \(d_3(2N^2) = d_3(N^2)\).
+\item  Let \(s, n \in \mathbb{N}\) and let \(q\) be a 3-prime such that \(q \nmid n\). Then we have \(D(n) = D(nq^{2s})\).
+
+Suppose that \(n\) has \(\gamma\) even divisors, \(\mu\) 1-divisors and \(\xi\) 3-divisors. Then \(nq^{2s}\) has:
+\begin{itemize}
+\item \(\gamma(2s + 1)\) even divisors: we take even divisor of \(n\) and multiply it by some power of \(q\).
+\item \(\mu(s + 1) + \xi s\) 1-divisors: we can either take 1-divisor of \(n\) and multiply it by even power of \(q\) or take 3-divisor of \(n\) and multiply it by odd power of \(q\).
+\item \(\xi(s + 1) + \mu s\) 3-divisors: we can either take 3-divisor of \(n\) and multiply it by even power of \(q\) or take 1-divisor of \(n\) and multiply it by odd power of \(q\).
+\end{itemize}
+Therefore \(D(nq^{2s}) = \mu(s + 1) + \xi s - \xi(s + 1) - \mu s = \mu - \xi = D(n)\).
+
+\item For \(L \in \{0, 1, \dots, l\}\) let \(N_L = \prod_{i = 1}^k p_i^{2a_i} \prod_{j = 1}^L q_j^{2b_j}\). \(L_0\) has \(\prod_{i = 1}^k(2a_i + 1)\) divisors and all are equal to 1 modulo 4, so \(D(N_0) = \prod_{i = 1}^k(2a_i + 1)\). By previous point and induction \(D(N_L) = \prod_{i = 1}^k(2a_i + 1)\) for all \(L\). Since \(N_L = N\), we have proven that \(D(2N^2) = \prod_{i = 1}^k(2a_i + 1)\).
+\end{itemize}
+
+We are looking for \(N = Q\prod_{i = 1}^k p_i^{a_i}\), where \(p_*\) are 1-primes, \(Q = \prod_{j = 1}^l q_j^{b_j}\), \(q_*\) are 3-primes and \(4\prod_{i = 1}^k(2a_i + 1) = 420 \leftrightarrow \prod_{i = 1}^k(2a_i + 1) = 105 = 3 \cdot 5 \cdot 7\). We have 5 possibilities:
+\begin{itemize}
+\item \(2a_1 + 1 = 105\): No solutions, since the lowest 1-prime is 5 and \(5^{52} > 10^{11}\).
+\item \(2a_1 + 1 = 15, 2a_2 + 1 = 7 \rightarrow a_1 = 7, a_2 = 3\) (\texttt{case1} in code).
+\item \(2a_1 + 1 = 21, 2a_2 + 1 = 5 \rightarrow a_1 = 10, a_2 = 2\): \(13^{10} > 10^{11}\), so we have \(p_1 = 5\) (\texttt{case2} in code).
+\item \(2a_1 + 1 = 35, 2a_2 + 1 = 3 \rightarrow a_1 = 17, a_2 = 1\): the lowest possible \(N\) is \(5^{17} \cdot 13 > 10^{11}\), so no solutions.
+\item \(2a_1 + 1 = 7, 2a_2 + 1 = 5, 2a_3 + 1 = 3 \rightarrow a_1 = 3, a_2 = 2, a_3 = 1\) (\texttt{case3} in code).
+\end{itemize}
+
+\textbf{Case 2}: \(N\) is even.
+
+Let \(N = 2n\). It follows from \((x - y)^2 + (x + y)^2 = 2(x^2 + y^2)\) that \(4D(N) = 4D(n)\). Therefore we can just look at odd \(N\) and multiply it by any power of 2 such that \(2^kN \leq 10^{11}\).
+\end{document}

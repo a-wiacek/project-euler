@@ -1,0 +1,19 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 641}
+\vspace{5ex}
+
+We are looking for numbers that have \(6k + 5\) divisors (\(k \in \mathbb{N}\)).
+
+Let \(n = \prod_{i = 1}^k \alpha_i^{a_i}\) (\(\alpha_i\) are distinct primes). Then \(n\) has \(d(n) = \prod_{i = 1}^k (a_i + 1)\) divisors. Following must hold:
+
+\begin{itemize}
+\item All \(a_i\) are even. If any \(a_i\) is odd, then \(d(n)\) is even, so \(d(n) \not\equiv 5 \mod 6\).
+\item Odd amount of \(a_i\) equals to 2 modulo 3, all other equal to 1 modulo 3. If any of them is divisible by 3, then so is \(d(n)\).
+\end{itemize}
+
+Therefore we have odd amount of \(a_*\) equal to 2 modulo 6 and the remaining ones must equal to 4 modulo 6.
+\end{document}

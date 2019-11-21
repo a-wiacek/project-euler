@@ -1,0 +1,28 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\renewcommand\vec[1]{\overrightarrow{#1}}
+\newcommand\norm[1]{\left\lVert\vec{#1}\right\rVert}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 613}
+\vspace{5ex}
+
+Let \(A = (40, 0), B = (0, 30), C = (0, 0)\) be vertices of Pythagorean triangle and let \(P = (x, y)\) denote position of ant. Then:
+\[\vec{PA} = (40 - x, -y), \vec{PB} = (-x, 30 - y)\]
+\[\norm{PA} = \sqrt{(40 - x)^2 + y^2}, \norm{PB} = \sqrt{x^2 + (30 - y)^2}\] \[\vec{PA} \cdot \vec{PB} = x^2 - 40 x + y^2 - 30 y\]
+Let \(\alpha(P) = \angle APB\). Then
+\[\alpha(P) = \arccos \left( \frac{\vec{PA} \cdot \vec{PB}}{\norm{PA} \norm{PB}} \right)\]
+
+Let \(\Delta = \{(x, y) \mid x > 0, y > 0, 4y + 3x < 120\}\) be Pythagorean triangle. Probability for ant to leave it is equal to 
+\[ \left(  \int_{P \in \Delta} 1 d\mu \right)^{-1} \int_{P \in \Delta} \frac{\alpha(P)}{2\pi} d\mu = \frac{1}{1200 \pi} \int_{P \in \Delta} \alpha(P(x, y)) dx dy =\]
+\[= \frac{1}{1200 \pi} \int_0^{40} \left( \int_0^{30 - 3x/4} \alpha(P(x, y)) dy\right) dx\]
+
+Following line computes this integral in Wolfram Mathematica:
+
+\texttt{NIntegrate[ArcCos[(x * x - 40 * x + y * y - 30 * y) / Sqrt[((40 - x) * (40 - x) + y * y) * (x * x + (30 - y) * (30 - y))]], {x, 0, 40}, {y, 0, 30 - 3 * x / 4}, WorkingPrecision -> 20] / (1200 * Pi)}
+
+\vspace{5ex}
+\textbf{Answer:}
+0.3916721504
+\end{document}

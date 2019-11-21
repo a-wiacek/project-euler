@@ -1,0 +1,31 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\e}{\mathbb{E}}
+\newcommand{\p}{\mathbb{P}}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 510}
+\vspace{5ex}
+
+Using Pythagoras theorem, we can conclude that \[r_C =  \frac{r_A r_B}{\left( \sqrt{r_A^2} + \sqrt{r_B^2} \right)^2}\]
+
+Let \(d = \gcd(r_A, r_B), r_A = ad, r_B = bd, \gcd(a, b) = 1\). Then
+
+\[r_C = \frac{abd}{\left(\sqrt{a} + \sqrt{b}\right)^2}\]
+
+When is denominator an integer? We have \(\left(\sqrt{a} + \sqrt{b}\right)^2 = a + b + 2 \sqrt{ab}\). Since \(a\) and \(b\) are coprime, both must be squares.
+
+Let \(a = \alpha^2\) and \(b = \beta^2\). Then
+
+\[r_C = \frac{\alpha^2 \beta^2 d}{\left(\alpha + \beta\right)^2}\]
+
+Since \(a\) and \(b\) are coprime, so are \(\alpha\) and \(\beta\). Therefore \(\gcd(\alpha + \beta, \alpha) = \gcd(\alpha + \beta, \beta) = 1\) and there must be \((\alpha + \beta)^2 \mid d\), so \(d = k(\alpha + \beta)^2\) and finally:
+
+\[r_A = k\alpha^2\left(\alpha + \beta\right)^2, \ r_B = k\beta^2\left(\alpha + \beta\right)^2, \ r_C = \alpha^2\beta^2k\]
+
+Constrains are: \(\alpha \leq \beta\) and \(k\beta^2\left(\alpha + \beta\right)^2 \leq n\)
+
+We have pretty low upper bound on \(b\): if \(b \geq \sqrt[4]{n}\), then \(r_B \geq \sqrt{n} (1 + \sqrt[4]{n})^2 > n\).
+
+\end{document}

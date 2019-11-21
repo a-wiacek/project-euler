@@ -1,0 +1,16 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\setlength\parindent{0pt}
+\textbf{Project Euler 157}
+\vspace{5ex}
+
+\[\frac{1}{a} + \frac{1}{b} = \frac{p}{10^n}\]
+\[ap10^n + bp10^n = abp^2\]
+\[(pa - 10^n)(pb - 10^n) = 10^{2n}\]
+
+Let \(d\) be divisor of \(10^{2n}\). Then \(d = 2^x5^y\), where \(0 \leq x, y \leq 2n\). We have
+\(pa = 2^x5^y + 10^n\) and \(pb = 2^{2n - x}5^{2n - y} + 10^n\), so equation has solution when \(p\) is common divisor of \(2^x5^y + 10^n\) and \(2^{2n - x}5^{2n - y} + 10^n\) (including \(p = 1\)).
+Since \(a \geq b\), we need to have \(2^x5^y \geq 2^{2n - x}5^{2n - y}\).
+\end{document}
