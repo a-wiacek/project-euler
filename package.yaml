@@ -19,7 +19,6 @@ dependencies:
 - arithmoi
 - array
 - containers
-- criterion
 - directory
 - filepath
 - hspec
