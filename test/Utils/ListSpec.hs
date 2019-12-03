@@ -116,6 +116,11 @@ spec = do
                 let l1 = nubSorted l1'
                     l2 = nubSorted l2'
                 in consecutivesSatisfy (<) (ascendingSum l1 l2)
+        it "Is symmetric" $
+            property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
+                let l1 = nubSorted l1'
+                    l2 = nubSorted l2'
+                in ascendingSum l1 l2 == ascendingSum l2 l1
     describe "descendingSum" $ do
         it "Computes union of two ordered lists" $
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
@@ -127,6 +132,11 @@ spec = do
                 let l1 = reverse $ nubSorted l1'
                     l2 = reverse $ nubSorted l2'
                 in consecutivesSatisfy (>) (descendingSum l1 l2)
+        it "Is symmetric" $
+            property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
+                let l1 = reverse $ nubSorted l1'
+                    l2 = reverse $ nubSorted l2'
+                in descendingSum l1 l2 == descendingSum l2 l1
     describe "ascendingIntersection" $ do
         it "Computes intersection of two ordered lists" $
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
@@ -138,6 +148,11 @@ spec = do
                 let l1 = nubSorted l1'
                     l2 = nubSorted l2'
                 in consecutivesSatisfy (<) (ascendingIntersection l1 l2)
+        it "Is symmetric" $
+            property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
+                let l1 = nubSorted l1'
+                    l2 = nubSorted l2'
+                in ascendingIntersection l1 l2 == ascendingIntersection l2 l1
     describe "descendingIntersection" $ do
         it "Computes intersection of two ordered lists" $
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
@@ -149,6 +164,11 @@ spec = do
                 let l1 = reverse $ nubSorted l1'
                     l2 = reverse $ nubSorted l2'
                 in consecutivesSatisfy (>) (descendingIntersection l1 l2)
+        it "Is symmetric" $
+            property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
+                let l1 = reverse $ nubSorted l1'
+                    l2 = reverse $ nubSorted l2'
+                in descendingIntersection l1 l2 == descendingIntersection l2 l1
     describe "ascendingMinus" $ do
         it "Computes difference of two ordered lists" $
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
