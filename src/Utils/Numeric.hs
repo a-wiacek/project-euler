@@ -8,6 +8,7 @@ module Utils.Numeric
     , binom
     , multinom
     , fastPowerMod
+    , digitsInBase
     , digits
     , pandigitalDigitsK
     , pandigitalDigits
@@ -18,8 +19,11 @@ module Utils.Numeric
     , digitsSum
     , digitalRoot
     ) where
+import Control.Monad(forM_)
+import Control.Monad.ST
+import Data.Array.ST
+import Utils.Array(modifyArray)
 import Utils.Function(iterFix)
-import Utils.List(updateAt)
 
 -- Infinite family of lists of Fibonacci numbers with chosen base values.
 fibonacci :: Integral a => a -> a -> [a]
@@ -70,13 +74,18 @@ fastPowerMod b e m = go b e 1 where
         where f x = x * b `mod` m
 
 -- Count digits of number. kth element of output list gives information about number of digits k in n.
--- 0 is assumed to have one digit 0.
+-- 0 is assumed to have one digit 0. Base is assumed to be >= 2.
+digitsInBase :: Integral a => a -> Int -> [Int]
+digitsInBase n b
+    | n == 0 = 1 : replicate (b - 1) 0
+    | otherwise = runST $ do
+        arr <- newArray (0, b - 1) 0 :: ST s (STUArray s Int Int)
+        let b' = fromIntegral b
+        forM_ (takeWhile (>0) $ iterate (`div` b') n) $ \x -> modifyArray arr (fromIntegral $ x `mod` b') succ
+        getElems arr
+
 digits :: Integral a => a -> [Int]
-digits n
-    | n == 0 = 1 : replicate 9 0
-    | otherwise = digits' (abs n) (replicate 10 0)
-    where digits' m l | m == 0 = l
-                      | otherwise = digits' (m `div` 10) (updateAt (fromIntegral $ m `mod` 10) succ l)
+digits n = digitsInBase n 10
 
 -- Number is k-pandigital, if it contains all digits from 1 to k exactly one.
 -- Number is pandigitial if it is 9-pandigital.

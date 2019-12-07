@@ -22,6 +22,8 @@ module Utils.List
     , foldDescend
     , everyOther
     , interweave
+    , picks
+    , permutations
     ) where
 import Data.List(groupBy, sort)
 
@@ -196,3 +198,15 @@ interweave :: [a] -> [a] -> [a]
 interweave (x:xs) (y:ys) = x : y : interweave xs ys
 interweave l [] = l
 interweave [] l = l
+
+-- Given list l, generate all pairs (x, l') such that x is from l and l' is l without x.
+picks :: [a] -> [(a, [a])]
+picks (h:n:t) = (h, n:t) : map (fmap (h:)) (picks $ n:t)
+picks [h] = [(h, [])]
+picks [] = []
+
+-- Generate list of all permutations of list. The difference between this function and Data.List.permutations
+-- is that all permutations are generated in lexicographical order (assuming that initial input is the first one).
+permutations :: [a] -> [[a]]
+permutations [] = [[]]
+permutations l = [h:t | (h, ts) <- picks l, t <- permutations ts]
