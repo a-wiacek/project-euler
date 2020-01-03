@@ -25,7 +25,7 @@ expectedValue (Node d ds) =
     let w = fromIntegral $ 7 * length ds
     in (d + 7 * sum (map expectedValue ds)) / (w + 1)
 
-theExpectedValue = expectedValue $ buildSuffixTree $ sortOn snd $ numerals
+theExpectedValue = expectedValue $ buildSuffixTree $ sortOn snd numerals
 
 euler610 :: IO String
 euler610 = return $ printf "%.8f" (140 / 0.86 + theExpectedValue)

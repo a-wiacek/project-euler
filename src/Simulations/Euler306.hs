@@ -16,7 +16,7 @@ addElem (Multiset ms) n = if n > 1
 playUsing :: Multiset -> Int -> [Multiset]
 playUsing (Multiset ms) k
     | k < 4 = [Multiset ms']
-    | otherwise = map (\(s, t) -> addElem (addElem (Multiset ms') s) t) [(s, k - 2 - s) | s <- [0..k `div` 2 - 1]]
+    | otherwise = [addElem (addElem (Multiset ms') s) (k - 2 - s) | s <- [0 .. k `div` 2 - 1]]
     where ms' = Map.update (\x -> if x == 1 then Nothing else Just (x - 1)) k ms
 
 split :: Multiset -> [Multiset]

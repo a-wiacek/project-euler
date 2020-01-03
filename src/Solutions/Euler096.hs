@@ -7,11 +7,9 @@ import Data.Char
 
 type Sudoku = UArray (Int, Int) Int
 show' :: Sudoku -> String
-show' sudoku =
-    let split :: [Int] -> [String]
-        split [] = []
-        split l = map intToDigit (take 9 l):split (drop 9 l)
-    in unlines $ split $ elems sudoku
+show' = unlines . split . elems
+    where split [] = []
+          split l = map intToDigit (take 9 l) : split (drop 9 l)
 sudokuPositions = [(a, b) | a <- [0..8], b <- [0..8]]
 
 updateSudoku :: (Int, Int) -> Int -> Sudoku -> Sudoku
@@ -25,10 +23,9 @@ splitSudokus [] = []
 splitSudokus l = readSudoku (take 9 $ drop 1 l) : splitSudokus (drop 10 l)
 
 smallSquare :: (Int, Int) -> [(Int, Int)]
-smallSquare (x, y) =
-    let x' = x `div` 3 * 3
-        y' = y `div` 3 * 3
-    in [(a, b) | a <- [x'..x' + 2], b <- [y'..y' + 2]]
+smallSquare (x, y) = [(a, b) | a <- [x'..x' + 2], b <- [y'..y' + 2]]
+    where x' = x `div` 3 * 3
+          y' = y `div` 3 * 3
 
 isCorrectGroup :: String -> Bool
 isValidRow, isValidColumn :: Int -> Sudoku -> Bool

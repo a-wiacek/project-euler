@@ -25,7 +25,7 @@ f (q', a) = let q = unPrime q'
 g f i = (f <> factPower (numfArr ! i) (fromIntegral $ i - 1)) `factMinus` (ffArr ! (i - 1))
 
 sumOfDivisorsMod :: Factorization Int -> Int
-sumOfDivisorsMod = foldr mulP 1 . map f . Map.toList . runFactorization
+sumOfDivisorsMod = foldr (mulP . f) 1 . Map.toList . runFactorization
 
 numfArr :: Array Int (Factorization Int)
 numfArr = funArray 1 (bound + 1) factorize
@@ -37,7 +37,7 @@ factorialsFactorization :: Int -> Factorization Int
 factorialsFactorization 1 = mempty
 factorialsFactorization n = ffArr ! (n - 1) <> numfArr ! n
 
-funS n = foldr addP 0 $ map sumOfDivisorsMod $ scanl g mempty [2..n]
+funS n = foldr (addP . sumOfDivisorsMod) 0 $ scanl g mempty [2..n]
 
 euler650 :: IO String
 euler650 = return $ show $ funS bound

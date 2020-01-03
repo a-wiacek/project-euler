@@ -1,5 +1,6 @@
 module Solutions.Euler531 where
 import Data.Array.Unboxed
+import Data.Maybe(fromMaybe)
 import Math.NumberTheory.Moduli.Chinese
 import Utils.NumberTheory(totientArrayUpTo)
 
@@ -7,7 +8,7 @@ lBound = 1000000
 bound = 1005000
 tots = totientArrayUpTo bound
 
-funG a n b m = maybe 0 id $ chinese (a, n) (b, m)
+funG a n b m = fromMaybe 0 $ chinese (a, n) (b, m)
 
 funF m n = funG (tots ! n) n (tots ! m) m
 

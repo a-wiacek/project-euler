@@ -10,7 +10,7 @@ fastT n =
     let initT = fromLists [[0], [1], [1], [4]]
     in if n < 4
         then initT ! (n + 1, 1)
-        else (mulMod (matrixFastPowerMod aMatrix (n - 3) p) initT p) ! (4, 1)
+        else mulMod (matrixFastPowerMod aMatrix (n - 3) p) initT p ! (4, 1)
 
 euler237 :: IO String
 euler237 = return $ show $ fastT $ 10^12

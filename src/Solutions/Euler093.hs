@@ -1,6 +1,6 @@
 module Solutions.Euler093 where
 import Utils.Operators((<:>))
-import Control.Monad(forM)
+import Control.Monad
 import Data.Char
 import Data.List
 import Data.Maybe
@@ -17,11 +17,10 @@ evalExp' (EOp Div e1 e2) = case (/) <$> evalExp' e1 <*> evalExp' e2 of
     Nothing -> Nothing
 evalExp' (EVal n) = pure n
 evalExp :: Exp Double -> Maybe Int
-evalExp e = case evalExp' e of
-    Nothing -> Nothing
-    Just e' -> if e' == fromInteger (round e') && e' > 0
-        then Just $ floor e'
-        else Nothing
+evalExp e = do e' <- evalExp' e
+               guard $ e' == fromInteger (round e') && e' > 0
+               return $ floor e'
+
 
 opsProd :: Int -> [[MatOp]]
 opsProd k = forM [1..k] $ const [Add, Sub, Mul, Div]

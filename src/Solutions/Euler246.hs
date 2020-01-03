@@ -51,7 +51,7 @@ properAngle (x, y) = cosphi < sqrt 0.5 where
     z1 = ellipse $ if d == 0 then pi else - 2 * atan ((u - s) / d)
     z2 = ellipse $ if d == 0 then 2 * atan (2500 * sqrt 5 / (f y - 1500)) else 2 * atan ((u + s) / d)
     p = (f x, f y)
-    cosphi = (dot (minus z1 p) (minus z2 p)) / (dist z1 p * dist z2 p)
+    cosphi = dot (minus z1 p) (minus z2 p) / (dist z1 p * dist z2 p)
 
 properLatticePoints = filter (outsideEllipse <&&> properAngle) (latticePoints circleBound)
 

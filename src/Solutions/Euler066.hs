@@ -5,10 +5,9 @@ import Data.List
 import Data.Ratio
 
 isBad n r = numerator r ^2 - n * denominator r ^2 /= 1 
-minimumX n =
-    let h:t = cont n
-        infrac = h:cycle t
-    in (n, numerator $ head $ dropWhile (isBad n) $ approxs infrac)
+minimumX n = (n, numerator $ head $ dropWhile (isBad n) $ approxs infrac)
+    where h:t = cont n
+          infrac = h : cycle t
 
 numbers = [2..1000] \\ map (^2) [2..31]
 max' (a, b) (c, d) = if b > d then (a, b) else (c, d)

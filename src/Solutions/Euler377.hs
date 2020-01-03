@@ -25,7 +25,7 @@ aMatrix = matrix 18 18 aMatrixFun
 funF :: Int -> Int
 funF n = if n <= 9
     then initVector ! (10 - n, 1)
-    else (mulMod (matrixFastPowerMod aMatrix (n - 9) p) initVector p) ! (1, 1)
+    else mulMod (matrixFastPowerMod aMatrix (n - 9) p) initVector p ! (1, 1)
 
 euler377 :: IO String
 euler377 = return $ show $ sum (map funF $ take 17 $ iterate (*13) 13) `mod` p

@@ -19,7 +19,7 @@ funG n = runST $ do
         forM_ [2 * x, 3 * x..n] $ \y ->
             modifyArray arr y ((*(x - 1)) . (`div` x))
     total <- newSTRef (0 :: Int)
-    forM_ [1, 3..n] $ \x -> readArray arr x >>= modifySTRef' total . plus
+    forM_ [1, 3..n] $ readArray arr >=> modifySTRef' total . plus
     readSTRef total
 
 euler512 :: IO String

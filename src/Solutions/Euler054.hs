@@ -86,8 +86,9 @@ pos3 [card1, card2, card3, card4, card5] -- 3rd card must be in three of a kind
 
 evalHand :: [Card] -> Hand
 evalHand unsortedHand =
-    let hand@[card1, card2, card3, card4, card5] = sortOn Data.Ord.Down unsortedHand :: [Card] in -- sorted from highest to lowest
-    case (straight hand, flush hand) of
+    -- sorted from highest to lowest
+    let hand@[card1, card2, card3, card4, card5] = sortOn Data.Ord.Down unsortedHand :: [Card]
+    in case (straight hand, flush hand) of
         (True, True) -> if value card1 == ace
             then Hand RoyalFlush []
             else Hand (StraightFlush $ value card1) []

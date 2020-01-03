@@ -1,5 +1,6 @@
 module Solutions.Euler082 where
 import Utils.Input(getInput)
+import Utils.Monad(whenM)
 import Solutions.Euler081(Matrix, parseMatrix)
 import Control.Monad
 import Control.Monad.ST
@@ -17,12 +18,10 @@ findMinPath matrix = let n = snd $ snd $ bounds matrix in runST $ do
         writeArray update (0, x) True
     let selectIndex = do
             selected <- newSTRef ((-1, -1), inf)
-            forM_ [0..n] $ \x -> forM_ [0..n] $ \y -> do
-                wasUpdated <- readArray update (x, y)
-                when wasUpdated $ do
-                    (_, oldVal) <- readSTRef selected
-                    newVal <- readArray dist (x, y)
-                    when (newVal < oldVal) $ writeSTRef selected ((x, y), newVal)
+            forM_ [0..n] $ \x -> forM_ [0..n] $ \y -> whenM (readArray update (x, y)) $ do
+                oldVal <- snd <$> readSTRef selected
+                newVal <- readArray dist (x, y)
+                when (newVal < oldVal) $ writeSTRef selected ((x, y), newVal)
             readSTRef selected
     let loop = do
             ((x, y), d) <- selectIndex
@@ -48,7 +47,7 @@ findMinPath matrix = let n = snd $ snd $ bounds matrix in runST $ do
                         writeArray update (x, y - 1) True
                 loop
     loop
-    foldr min inf <$> forM [0..n] (readArray dist . (,) n)
+    minimum <$> forM [0..n] (readArray dist . (,) n)
 
 euler082 :: IO String
 euler082 = show . findMinPath . parseMatrix <$> getInput 82

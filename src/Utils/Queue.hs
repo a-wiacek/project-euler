@@ -12,9 +12,21 @@ module Utils.Queue
 -- Simple implementation of queue using two lists.
 
 data Queue a = Queue Int [a] [a] deriving Eq
-instance Show a => Show (Queue a) where showsPrec d q = showParen (d > 10) $ showString "fromList " . shows (toList q)
-instance Functor Queue where fmap f (Queue n l1 l2) = Queue n (map f l1) (map f l2)
-instance Foldable Queue where foldr f v = foldr f v . toList
+
+instance Show a => Show (Queue a) where
+    showsPrec d q = showParen (d > 10) $ showString "fromList " . shows (toList q)
+
+instance Functor Queue where
+    fmap f (Queue n b e) = Queue n (map f b) (map f e)
+
+instance Foldable Queue where
+    foldr f v = foldr f v . toList
+
+instance Semigroup (Queue a) where
+    (Queue n1 b1 e1) <> (Queue n2 b2 e2) = Queue (n1 + n2) b1 (e2 ++ reverse b2 ++ e1)
+
+instance Monoid (Queue a) where
+    mempty = empty
 
 -- Move all elements to second list. This function is not exposed.
 reorder :: Queue a -> Queue a

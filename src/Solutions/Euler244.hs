@@ -2,8 +2,8 @@
 module Solutions.Euler244 where
 import Data.Array
 import Data.Char(ord, intToDigit)
-import Data.List(delete, findIndex, findIndices)
-import Data.Maybe(catMaybes, fromJust)
+import Data.List(delete, elemIndex, elemIndices)
+import Data.Maybe(mapMaybe, fromJust)
 import qualified Data.IntMap.Strict as IntMap
 import qualified Data.IntSet as IntSet
 import Numeric(showIntAtBase)
@@ -47,7 +47,7 @@ posToIndex :: Position -> Int
 posToIndex (Position b rs) = 2 * 3 ^ b + sum (map (3^) rs)
 
 indexToPos :: Int -> Position
-indexToPos n = Position (fromJust $ findIndex (=='2') s) (findIndices (=='1') s) where
+indexToPos n = Position (fromJust $ elemIndex '2' s) (elemIndices '1' s) where
     s' = showIntAtBase 3 intToDigit n ""
     s = reverse $ replicate (16 - length s') '0' ++ s'
 
@@ -64,7 +64,7 @@ moveLeft = move (\b -> b `mod` 4 == 3) succ
 moveRight = move (\b -> b `mod` 4 == 0) pred
 
 neighboursPos :: Position -> [Position]
-neighboursPos pos = catMaybes $ map ($ pos) [moveUp, moveDown, moveLeft, moveRight]
+neighboursPos pos = mapMaybe ($ pos) [moveUp, moveDown, moveLeft, moveRight]
 
 neighboursIndexes :: Int -> [Int]
 neighboursIndexes = map posToIndex . neighboursPos . indexToPos 
@@ -104,10 +104,8 @@ retrievedPaths :: [[Position]]
 retrievedPaths = map (map indexToPos) (go (maxDepth - 1) [[finalIndex]]) where
     go depth paths
         | depth == 0 = paths
-        | otherwise = go (depth - 1) [nbi:path
-            | path@(h:_) <- paths
-            , nbi <- filter (\i -> positionsBFS IntMap.!? i == Just (depth - 1)) (neighboursIndexes h)
-            ]
+        | otherwise = go (depth - 1) [nbi : path | path@(h:_) <- paths,
+            nbi <- filter (\i -> positionsBFS IntMap.!? i == Just (depth - 1)) (neighboursIndexes h)]
 
 getPathVal :: [Position] -> Int
 getPathVal = foldl updateChecksum 0 . foldDescend findMove

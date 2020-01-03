@@ -1,4 +1,5 @@
 module Solutions.Euler058 where
+import Utils.Monad(whenM)
 import Utils.NumberTheory(primesUpTo, isPrime)
 import Control.Monad
 import Control.Monad.ST
@@ -14,8 +15,7 @@ result = runST $ do
                   replicateM_ 4 $ do
                       modifySTRef curr (+s)
                       modifySTRef total succ
-                      c <- readSTRef curr
-                      when (isPrime c) (modifySTRef primes succ)
+                      whenM (isPrime <$> readSTRef curr) (modifySTRef primes succ)
                   p <- readSTRef primes
                   t <- readSTRef total
                   if 10 * p < t

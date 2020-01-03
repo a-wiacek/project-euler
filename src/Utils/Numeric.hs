@@ -27,7 +27,7 @@ import Utils.Function(iterFix)
 
 -- Infinite family of lists of Fibonacci numbers with chosen base values.
 fibonacci :: Integral a => a -> a -> [a]
-fibonacci a b = a:fibonacci b (a + b)
+fibonacci a b = a : fibonacci b (a + b)
 
 -- Compute reverse of a number.
 reverseInt :: Integral a => a -> a

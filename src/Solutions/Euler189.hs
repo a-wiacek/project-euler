@@ -176,12 +176,9 @@ matchableTriangles = runSTUArray $ do
     forM_ allRows $ \row1 -> forM_ allRows $ \row2 -> when (matchingRows row1 row2) $
         readArray arr row1 >>= writeArray arr row1 . (+arrayTriangleWithEdge ! row2)
     return arr
-        
 
 match4Triangles :: Triangle -> Int
-match4Triangles triangle = matchableTriangles ! edgeB triangle
-                         * matchableTriangles ! edgeR triangle
-                         * matchableTriangles ! edgeL triangle
+match4Triangles triangle = product $ map (\edge -> matchableTriangles ! edge triangle) [edgeB, edgeR, edgeL]
 
 count8Triangles :: Int
 count8Triangles = sum $ map match4Triangles valid4Triangles

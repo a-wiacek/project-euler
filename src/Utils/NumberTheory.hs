@@ -40,8 +40,9 @@ primesArrayUpTo :: Int -> UArray Int Bool
 primesArrayUpTo n = runSTUArray $ do
     arr <- newArray (1, n) True
     writeArray arr 1 False
-    forM_ [2..floor $ sqrt $ fromIntegral n] $ \x ->
-        readArray arr x >>= flip when (forM_ [x * x, x * x + x..n] $ flip (writeArray arr) False)
+    forM_ [2..floor $ sqrt $ fromIntegral n] $ \x -> do
+        isPrime <- readArray arr x
+        when isPrime $ forM_ [x * x, x * x + x..n] $ \t -> writeArray arr t False
     return arr
 
 -- Produce list of all primes up to n.
@@ -53,7 +54,10 @@ isPrime :: P.UniqueFactorisation a => a -> Bool
 isPrime = isJust . P.isPrime 
 
 -- Structure holding factorization of a number. Keys in map are primes, and values are powers of primes.
-data Factorization a = Factorization { runFactorization :: !(M.Map (P.Prime a) Word), factoredNum :: !a } deriving Show
+data Factorization a = Factorization
+    { runFactorization :: !(M.Map (P.Prime a) Word)
+    , factoredNum :: !a
+    } deriving Show
 
 instance (Num a, Ord a) => Semigroup (Factorization a) where
     Factorization f1 n1 <> Factorization f2 n2 = Factorization (M.unionWith (+) f1 f2) (n1 * n2)
@@ -103,10 +107,12 @@ sumOfDivisors = product . map (\(p', a) -> let p = P.unPrime p' in (p ^ (a + 1) 
 totientArrayUpTo :: Int -> UArray Int Int
 totientArrayUpTo n = runSTUArray $ do
     arr <- newListArray (1, n) [1..]
-    forM_ [2..n] $ \x -> readArray arr x >>= \val -> when (val == x) $ do
-        writeArray arr x (x - 1)
-        forM_ [2 * x, 3 * x..n] $ \y ->
-            modifyArray arr y ((*(x - 1)) . (`div` x))
+    forM_ [2..n] $ \x -> do
+        val <- readArray arr x
+        when (val == x) $ do
+            writeArray arr x (x - 1)
+            forM_ [2 * x, 3 * x..n] $ \y ->
+                modifyArray arr y ((*(x - 1)) . (`div` x))
     return arr
 
 -- Extended Euclidean algorithm.

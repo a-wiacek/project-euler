@@ -22,7 +22,7 @@ countRotations = go 0 'A' where
 
 findArr :: Int -> Int -> String
 findArr whichArr carriages =
-    (filter (\c -> countRotations c == 2 * carriages - 3) $ permutations carriages) !! (whichArr - 1)
+    filter (\c -> countRotations c == 2 * carriages - 3) (permutations carriages) !! (whichArr - 1)
 
 euler336 :: IO String
 euler336 = return $ findArr 2011 11

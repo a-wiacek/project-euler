@@ -1,8 +1,7 @@
 {-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE LambdaCase #-}
-
 module Solutions.Euler107 where
 import Utils.Input(getInput)
+import Utils.Monad(ifteM)
 import Control.Monad
 import Control.Monad.ST
 import Data.Array.ST
@@ -31,9 +30,8 @@ getSaving (n, edges') = runST $ do
     ans <- newSTRef 0
     parent <- newArray (1, n) Nothing :: ST s (STArray s Int (Maybe Int))
     rank <- newArray (1, n) 0 :: ST s (STArray s Int Int)
-    let find x = readArray parent x >>= \case
-            Nothing -> return x
-            Just p -> find p >>= \root -> writeArray parent x (Just root) >> return root
+    let find x = readArray parent x
+             >>= maybe (return x) (find >=> \root -> writeArray parent x (Just root) >> return root)
     let union x y = do
             xRoot <- find x
             yRoot <- find y
@@ -45,12 +43,9 @@ getSaving (n, edges') = runST $ do
                     then writeArray parent xRoot (Just yRoot)
                     else when (xRoot /= yRoot)
                               (writeArray parent yRoot (Just xRoot) >> writeArray rank xRoot (xRank + 1))
-    forM_ (sortBy cmpEdge edges') $ \((b, e), w) -> do
-        t1 <- find b
-        t2 <- find e
-        if t1 == t2
-            then modifySTRef' ans (+w)
-            else b `union` e
+    forM_ (sortBy cmpEdge edges') $ \((b, e), w) -> ifteM ((==) <$> find b <*> find e)
+                                                          (modifySTRef' ans (+w))
+                                                          (b `union` e)
     readSTRef ans
 
 euler107 :: IO String

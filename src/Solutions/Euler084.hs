@@ -119,7 +119,7 @@ getNextPosition = do
     step <- rollDices
     dbls <- gets doubles
     if dbls == 3
-        then return squareJAIL
+        then modify (\s -> s { doubles = 0 }) >> return squareJAIL
         else applyStep step <$> gets position
 
 goToSquare :: Square -> SimulationState s ()

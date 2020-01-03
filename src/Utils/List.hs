@@ -30,7 +30,7 @@ import Data.List(groupBy, sort)
 -- Given list of elements, reduce it to pair (first element, length).
 -- Usually this is used to reduce list with all elements equal.
 reduceList :: [a] -> (a, Int)
-reduceList [] = (undefined, 0)
+reduceList [] = (error "Utils.List.reduceList: reducing empty list", 0)
 reduceList (h:t) = (h, length t + 1)
 
 -- Given natural number n and list of elements l, create list consisting of all
@@ -65,7 +65,7 @@ nubSorted (h:n:t) = let t' = nubSorted (n:t) in if h == n then t' else h:t'
 splitOn :: (Eq a) => a -> [a] -> [[a]]
 splitOn e l = case span (/= e) l of
     (s, []) -> [s]
-    (s, h:t) -> s:splitOn e t
+    (s, h:t) -> s : splitOn e t
 
 -- Check if all elements in list are equal.
 allEqual :: Eq a => [a] -> Bool

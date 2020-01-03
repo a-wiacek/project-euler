@@ -5,6 +5,7 @@ import Data.Array.Unboxed
 import Data.Array.ST
 import Data.STRef
 import Utils.Array
+import Utils.Monad
 
 simulate :: Int -> Int
 simulate n = runST $ do
@@ -19,7 +20,7 @@ simulate n = runST $ do
                   stones <- readArray arr i
                   writeArray arr i 0
                   replicateM_ stones putStone
-        loop n = step >> check >>= \p -> if p then return n else loop (n + 1)
+        loop n = step >> ifteM check (return n) (loop (n + 1))
     loop 1
 
 runSimulation335 :: IO ()
