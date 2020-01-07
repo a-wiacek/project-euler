@@ -1,6 +1,5 @@
 module Utils.Input
-    ( getFile
-    , getInput
+    ( getInput
     , getSolutionFromTxt
     , getSolutionFromTex
     ) where
