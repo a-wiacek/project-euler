@@ -8,7 +8,7 @@ import Text.Printf
 import System.FilePath
 
 getFile :: FilePath -> Int -> IO String
-getFile ext problemNo = readFile $ joinPath [ext, printf "Euler%03d.%s" problemNo ext]
+getFile ext problemNo = readFile $ joinPath ["..", ext, printf "Euler%03d.%s" problemNo ext]
 
 getInput :: Int -> IO String
 getInput = getFile "in"
