@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 mod solutions {
     pub mod euler001;
     pub mod euler002;
@@ -14,8 +13,25 @@ mod solutions {
 use std::time::Instant;
 
 fn main() {
+    let mut number = String::new();
+    println!("Which problem do you want to run?");
+    std::io::stdin().read_line(&mut number).expect("Failed to read line");
+    let fun = match number.trim().parse() {
+        Ok(1) => solutions::euler001::euler001,
+        Ok(2) => solutions::euler002::euler002,
+        Ok(3) => solutions::euler003::euler003,
+        Ok(4) => solutions::euler004::euler004,
+        Ok(5) => solutions::euler005::euler005,
+        Ok(6) => solutions::euler006::euler006,
+        Ok(7) => solutions::euler007::euler007,
+        Ok(8) => solutions::euler008::euler008,
+        Ok(9) => solutions::euler009::euler009,
+        Ok(10) => solutions::euler010::euler010,
+        Ok(num) => panic!("Solution for problem {} does not exist yet!", num),
+        Err(_) => panic!("Failed to read a number")
+    };
     let now = Instant::now();
-    println!("Output: {}", solutions::euler008::euler008());
+    println!("Output: {}", fun());
     println!("Execution time: {} s", now.elapsed().as_secs_f64());
 }
 
