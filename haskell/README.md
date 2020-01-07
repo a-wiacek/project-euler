@@ -1,4 +1,4 @@
-# project-euler
+# Project Euler in Haskell
 
 Usage:
 * `stack exec euler -- (-r|--run N)`
