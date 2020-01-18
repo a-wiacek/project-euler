@@ -7,5 +7,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+cached = "0.11.0"
+itertools = "0.8.2"
 num = "0.2.0"
+permutohedron = "0.2.4"
 primal = "0.2.3"

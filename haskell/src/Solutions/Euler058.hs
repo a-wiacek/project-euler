@@ -19,7 +19,7 @@ result = runST $ do
                   p <- readSTRef primes
                   t <- readSTRef total
                   if 10 * p < t
-                      then succ <$> readSTRef step
+                      then return $ s + 1
                       else modifySTRef step (+2) >> loop
     loop
 

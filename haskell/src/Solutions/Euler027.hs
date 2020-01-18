@@ -18,4 +18,4 @@ max' :: (Int, Int) -> (Int, Int) -> (Int, Int)
 max' (a, b) (c, d) = if a > c then (a, b) else (c, d)
 
 euler027 :: IO String
-euler027 = return $ show $ snd $ foldr1 max' [(compute a b, a * b) | a <- [-999..1000], b <- [-1000..1001]]
+euler027 = return $ show $ snd $ foldr1 max' [(compute a b, a * b) | a <- [-999..999], b <- [-1000..1000]]

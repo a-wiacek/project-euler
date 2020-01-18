@@ -3,6 +3,6 @@ pub fn euler010() -> String {
     primal::Sieve::new(bound)
         .primes_from(0)
         .take_while(|x| x < &bound)
-        .fold(0, |a, b| a + b)
+        .sum::<usize>()
         .to_string()
 }

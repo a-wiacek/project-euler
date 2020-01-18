@@ -1,14 +1,9 @@
+use crate::utils::numeric::fibonacci::Fibonacci;
+
 pub fn euler002() -> String {
-    let mut sum = 0;
-    let mut low = 1;
-    let mut high = 1;
-    while high < 4000000 {
-        let tmp = low + high;
-        low = high;
-        high = tmp;
-        if high % 2 == 0 {
-            sum += high;
-        }
-    }
-    sum.to_string()
+    Fibonacci::new(1, 1)
+        .take_while(|&n| n < 4000000)
+        .filter(num::Integer::is_even)
+        .sum::<i32>()
+        .to_string()
 }

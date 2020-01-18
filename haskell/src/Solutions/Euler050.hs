@@ -3,7 +3,7 @@ import Utils.NumberTheory(primesArrayUpTo)
 import Data.Array.Unboxed
 
 primes = primesArrayUpTo 1000000
-prefixSums = takeWhile (<3000000) $ scanl (+) 0 $ map fst . filter snd . assocs $ primes
+prefixSums = takeWhile (<2000000) $ scanl (+) 0 $ map fst . filter snd . assocs $ primes
 
 max' (a, b) (c, d) = if a > c then (a, b) else (c, d)
 

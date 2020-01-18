@@ -11,10 +11,12 @@ fn horizontal_max(array: &Vec<Vec<i32>>) -> i32 {
         .iter()
         .map(|row| {
             row.windows(4)
-                .map(|w| w.into_iter().fold(1, |a, b| a * b))
-                .fold(0, std::cmp::max)
+                .map(|w| w.into_iter().product())
+                .max()
+                .unwrap()
         })
-        .fold(0, std::cmp::max)
+        .max()
+        .unwrap()
 }
 
 fn vertical_max(array: &Vec<Vec<i32>>) -> i32 {
@@ -59,6 +61,7 @@ pub fn euler011() -> String {
     [horizontal_max, vertical_max, diagonal_max]
         .iter()
         .map(|f| f(&array))
-        .fold(0, std::cmp::max)
+        .max()
+        .unwrap()
         .to_string()
 }

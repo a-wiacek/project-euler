@@ -28,9 +28,9 @@ replaceSubset n subset = (foldr min nmax l, length l) where
 replacePrimes :: Int -> Maybe Int
 replacePrimes n = if ans < nmax then Just ans else Nothing where
     ans = foldr (min . fst) nmax
-              $ filter ((==8) . snd)
-              $ map (replaceSubset n) 
-              $ filter ((==3) . length) $ init $ powerset [0..length (show n) - 1]
+        $ filter ((==8) . snd)
+        $ map (replaceSubset n)
+        $ filter ((==3) . length) $ init $ powerset [0..length (show n) - 1]
 
 loop :: Int -> Int
 loop n = fromMaybe (loop $ n + 1) $ replacePrimes n
