@@ -29,13 +29,13 @@ import Utils.Function(iterFix)
 fibonacci :: Integral a => a -> a -> [a]
 fibonacci a b = a : fibonacci b (a + b)
 
--- Compute reverse of a number.
+-- Compute reverse of a nonnegative number.
 reverseInt :: Integral a => a -> a
 reverseInt n = reverseInt' n 0 where
     reverseInt' 0 y = y
     reverseInt' x y = reverseInt' (x `div` 10) (10 * y + x `mod` 10)
 
--- Check if number is a palindrome.
+-- Check if a nonnegative number is a palindrome.
 isPalindrome :: Integral a => a -> Bool
 isPalindrome n = n == reverseInt n
 
@@ -69,7 +69,7 @@ multinom l = product [1..sum l] `div` product (map factorial l)
 fastPowerMod :: (Integral a, Integral b) => a -> b -> a -> a
 fastPowerMod b e m = go b e 1 where
     go b e acc
-        | e == 0 = acc
+        | e == 0 = acc `mod` m
         | otherwise = go (f b) (e `div` 2) (if odd e then f acc else acc)
         where f x = x * b `mod` m
 
@@ -81,7 +81,8 @@ digitsInBase n b
     | otherwise = runST $ do
         arr <- newArray (0, b - 1) 0 :: ST s (STUArray s Int Int)
         let b' = fromIntegral b
-        forM_ (takeWhile (>0) $ iterate (`div` b') n) $ \x -> modifyArray arr (fromIntegral $ x `mod` b') succ
+        forM_ (takeWhile (/= 0) $ iterate (`quot` b') n) $ \x ->
+            modifyArray arr (fromIntegral $ abs (x `rem` b')) succ
         getElems arr
 
 digits :: Integral a => a -> [Int]

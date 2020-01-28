@@ -1,6 +1,8 @@
 module Utils.Queue
     ( Queue
+    , reorder
     , empty
+    , singleton
     , fromList
     , toList
     , size
@@ -11,7 +13,12 @@ module Utils.Queue
 
 -- Simple implementation of queue using two lists.
 
-data Queue a = Queue Int [a] [a] deriving Eq
+data Queue a = Queue Int [a] [a]
+
+-- Eq is not derived, since two queues should be equal if they keep the same elements
+-- in the same order. They don't nned to have the same internal representations.
+instance Eq a => Eq (Queue a) where
+    q1 == q2 = size q1 == size q2 && toList q1 == toList q2
 
 instance Show a => Show (Queue a) where
     showsPrec d q = showParen (d > 10) $ showString "fromList " . shows (toList q)
@@ -28,13 +35,17 @@ instance Semigroup (Queue a) where
 instance Monoid (Queue a) where
     mempty = empty
 
--- Move all elements to second list. This function is not exposed.
+-- Move all elements to second list.
 reorder :: Queue a -> Queue a
-reorder (Queue n l []) = Queue n [] (reverse l)
+reorder (Queue n l1 l2) = Queue n [] (l2 ++ reverse l1)
 
 -- Create empty queue.
 empty :: Queue a
 empty = Queue 0 [] []
+
+-- Create queue with single element.
+singleton :: a -> Queue a
+singleton e = Queue 1 [] [e]
 
 -- Create queue from list.
 fromList :: [a] -> Queue a

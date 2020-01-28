@@ -2,7 +2,7 @@
 module Utils.ListSpec where
 import Test.Hspec
 import Test.QuickCheck
-import Test.QuickCheck.Modifiers
+import Data.Maybe
 import Data.List
 import Data.Ord
 import Utils.List
@@ -12,11 +12,8 @@ noDuplicates :: Eq a => [a] -> Bool
 noDuplicates (x:y:z) = x /= y && noDuplicates (y:z)
 noDuplicates _ = True
 
-combinationPairs :: Gen (Int, Int)
-combinationPairs = elements [(x, y) | x <- [1..15], y <- [0..x]]
-
-numGenerator :: Int -> Gen Int
-numGenerator n = choose (0, n)
+combinationPairs :: [(Int, Int)]
+combinationPairs = [(x, y) | x <- [1..15], y <- [0..x]]
 
 data ListWithIndex a = ListWithIndex [a] Int deriving Show
 instance Arbitrary a => Arbitrary (ListWithIndex a) where
@@ -40,11 +37,6 @@ consecutivesSatisfy f = go where
     go (a:b:t) = f a b && go (b:t)
     go _ = True
 
-intersperseLists :: [a] -> [a] -> [a]
-intersperseLists l [] = l
-intersperseLists [] l = l
-intersperseLists (a:b) (x:y) = a : x : intersperseLists b y
-
 spec :: Spec
 spec = do
     describe "reduceList" $
@@ -53,36 +45,36 @@ spec = do
                 let n = abs n' + 1 in reduceList (replicate n c) === (c, n)
     describe "combinations" $ do -- only small tests because of exponential time complexity
         it "Returns as much combinations as expected" $
-            property $ forAll combinationPairs $
-                \(x, y) -> length (uniques $ combinations y [1..x]) === binom x y
+            conjoin $ map (\(x, y) -> length (uniques $ combinations y [1..x]) === binom x y) combinationPairs
         it "Each combination has expected amount of elements" $
-            property $ forAll combinationPairs $
-                \(x, y) -> all (\l -> length l == y) $ combinations y [1..x]
+            conjoin $ map (\(x, y) -> conjoin $ map (\l -> length l === y) $ combinations y [1..x]) combinationPairs
     describe "combinations2" $ do -- only small tests because of exponential time complexity
         it "Returns as much combinations as expected" $
-            property $ forAll combinationPairs $
-                \(x, y) -> length (uniques $ combinations2 y [1..x]) === binom x y
+            conjoin $ map (\(x, y) -> length (uniques $ combinations2 y [1..x]) === binom x y) combinationPairs
         it "Each combination has expected amount of elements" $
-            property $ forAll combinationPairs $
-                \(x, y) -> all (\(s, r) -> length s == y && length r == x - y) $ combinations2 y [1..x]
+            conjoin $ map
+                (\(x, y) -> conjoin $ map
+                    (\(s, r) -> length s === y .&&. length r === x - y)
+                    (combinations2 y [1..x]))
+                combinationPairs
     describe "powerset" $ do -- only small tests because of exponential time complexity
         it "Returns as much elements as expected" $
-            property $ forAll (numGenerator 15) $ \x -> length (uniques $ powerset [1..x]) === 2^x
+            conjoin $ map (\x -> length (uniques $ powerset [1..x]) === 2^x) [0..15]
         it "Returns empty list only once" $
-            property $ forAll (numGenerator 15) $ \x -> length (filter null $ powerset [1..x]) === 1
+            conjoin $ map (\x -> length (filter null $ powerset [1..x]) === 1) [0..15]
     describe "nubSorted" $
         it "Does not leave duplicates next to each other" $
             property $ \(s :: [Int]) -> noDuplicates (nubSorted s)
     describe "splitOn" $ do
         it "Does not leave separator in output lists" $
-            property $ \(c :: Int) (s :: [Int]) -> not (any (elem c) (splitOn c s))
+            property $ \(c :: Int) (s :: [Int]) -> expectFailure (disjoin $ map (elem c) (splitOn c s))
         it "Returns to previous value after joining output lists using separator" $
             property $ \(c :: Int) (s :: [Int]) -> intercalate [c] (splitOn c s) === s
     describe "allEqual" $ do
         it "Confirms that all elements of list are equal if they indeed are" $
             property $ \(m :: Int) (Small (n :: Int)) -> allEqual (replicate (abs n) m)
         it "Returns false if some elements of list differ" $
-            property $ \(l :: [Int]) -> not (allEqual $ l ++ [length l, length l + 1])
+            property $ \(l :: [Int]) -> expectFailure (allEqual $ l ++ [length l, length l + 1])
     describe "uniquesBy" $
         it "Leaves at most one element from each class of congruence" $
             property $ \(l :: [Int]) -> uniqueRemainders 10 (uniquesBy (\x y -> (x - y) `mod` 10 == 0) l)
@@ -102,7 +94,7 @@ spec = do
                 in take n l' === take n l .&&. drop n l' === drop (n + 1) l
     describe "takeLast" $ do
         it "Does not find anything for falsey predicate" $
-            property $ \(l :: [Int]) -> takeLast (const False) l === Nothing
+            property $ \(l :: [Int]) -> isNothing (takeLast (const False) l)
         it "Finds last element for non-empty list" $
             property $ \(NonEmpty (l :: [Int])) -> takeLast (const True) l === Just (last l)
     describe "ascendingSum" $ do
@@ -120,7 +112,7 @@ spec = do
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
                 let l1 = nubSorted l1'
                     l2 = nubSorted l2'
-                in ascendingSum l1 l2 == ascendingSum l2 l1
+                in ascendingSum l1 l2 === ascendingSum l2 l1
     describe "descendingSum" $ do
         it "Computes union of two ordered lists" $
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
@@ -136,7 +128,7 @@ spec = do
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
                 let l1 = reverse $ nubSorted l1'
                     l2 = reverse $ nubSorted l2'
-                in descendingSum l1 l2 == descendingSum l2 l1
+                in descendingSum l1 l2 === descendingSum l2 l1
     describe "ascendingIntersection" $ do
         it "Computes intersection of two ordered lists" $
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
@@ -152,7 +144,7 @@ spec = do
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
                 let l1 = nubSorted l1'
                     l2 = nubSorted l2'
-                in ascendingIntersection l1 l2 == ascendingIntersection l2 l1
+                in ascendingIntersection l1 l2 === ascendingIntersection l2 l1
     describe "descendingIntersection" $ do
         it "Computes intersection of two ordered lists" $
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
@@ -168,7 +160,7 @@ spec = do
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
                 let l1 = reverse $ nubSorted l1'
                     l2 = reverse $ nubSorted l2'
-                in descendingIntersection l1 l2 == descendingIntersection l2 l1
+                in descendingIntersection l1 l2 === descendingIntersection l2 l1
     describe "ascendingMinus" $ do
         it "Computes difference of two ordered lists" $
             property $ \(Ordered (l1' :: [Int])) (Ordered (l2' :: [Int])) ->
@@ -218,8 +210,14 @@ spec = do
             property $ \(NonEmpty (l :: [Int])) -> foldDescend const l === init l
         it "Takes tail of nonempty list if supplied with function returning second argument" $
             property $ \(NonEmpty (l :: [Int])) -> foldDescend (const id) l === tail l
-    describe "everyOther" $ do
+    describe "everyOther, interweave" $ do
         it "Halves length of list" $
             property $ \(l :: [Int]) -> length l `div` 2 === length (everyOther False l)
         it "Splits list into two equally sized parts" $
-            property $ \(l :: [Int]) -> intersperseLists (everyOther True l) (everyOther False l) === l
+            property $ \(l :: [Int]) -> interweave (everyOther True l) (everyOther False l) === l
+    describe "picks" $
+        it "Generates pairs of element from list and remaining ones" $
+            property $ \(Ordered (l1 :: [Int])) -> conjoin $ map (\(el, rem) -> insert el rem === l1) (picks l1)
+    describe "permutations" $ -- only small tests because of factorial time complexity
+        it "Generates all permutations of elements" $
+            conjoin $ map (\n -> sort (Data.List.permutations [0..n]) === sort (Utils.List.permutations [0..n])) [0..7]

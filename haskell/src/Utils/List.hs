@@ -193,7 +193,7 @@ everyOther _ [] = []
 everyOther True (h:t) = h : everyOther False t
 everyOther False (h:t) = everyOther True t
 
--- Interweave two lists, stating with first element of the first list.
+-- Interweave two lists, starting with the first element of the first list.
 interweave :: [a] -> [a] -> [a]
 interweave (x:xs) (y:ys) = x : y : interweave xs ys
 interweave l [] = l

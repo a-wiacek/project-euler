@@ -57,7 +57,7 @@ isPrime = isJust . P.isPrime
 data Factorization a = Factorization
     { runFactorization :: !(M.Map (P.Prime a) Word)
     , factoredNum :: !a
-    } deriving Show
+    } deriving (Eq, Show)
 
 instance (Num a, Ord a) => Semigroup (Factorization a) where
     Factorization f1 n1 <> Factorization f2 n2 = Factorization (M.unionWith (+) f1 f2) (n1 * n2)
@@ -121,7 +121,7 @@ totientArrayUpTo n = runSTUArray $ do
 -- Note that x or y may be negative.
 gcdExt :: Integral a => a -> a -> (a, a, a)
 gcdExt a b
-    | b == 0 = (1, 0, a)
+    | b == 0 = (signum a, 0, abs a)
     | otherwise = (t, s - q * t, g)
     where (q, r) = a `quotRem` b
           (s, t, g) = gcdExt b r
