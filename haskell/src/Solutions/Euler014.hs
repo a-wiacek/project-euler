@@ -1,4 +1,5 @@
 module Solutions.Euler014 where
+import Utils.List(maxBy)
 import Control.Monad.Memo
 
 type M = Memo Int Int
@@ -11,10 +12,7 @@ values :: M [(Int, Int)]
 values = forM [2..999999] $ \x -> memo compute x >>= \c -> return (x, c)
 
 process :: M Int
-process = fst . foldr1 max' <$> values
-
-max' :: (Int, Int) -> (Int, Int) -> (Int, Int)
-max' (k1, v1) (k2, v2) = if v1 > v2 then (k1, v1) else (k2, v2)
+process = fst . maxBy snd <$> values
 
 euler014 :: IO String
 euler014 = return $ show $ startEvalMemo process

@@ -19,7 +19,7 @@ validSquares = [() |
     j <- [0..9],
     l <- [0..9],
     m <- [0..9],
-    let s = d + g + j + m,
+    let s = d + g + j + m, -- sum of elements in line
     let h = s - e - f - g,
     isDigit h,
     let p = s - d - h - l,

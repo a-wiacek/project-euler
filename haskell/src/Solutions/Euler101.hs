@@ -14,7 +14,7 @@ lagrangePoly ls x =
     in sum $ map (\(y, i) -> y * lagrangeBase i xs x) $ zip ys [0..]
 
 u :: Double -> Double
-u n = let sign = 1:(-1):sign in sum $ zipWith (*) sign $ map (n^) [0..10]
+u n = sum $ map ((-n)^) [0..10]
 
 value :: Double -> Int
 value n = floor $ lagrangePoly (map (floor <:> u) [1..n]) (n + 1)

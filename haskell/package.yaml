@@ -26,10 +26,11 @@ dependencies:
 - monad-memo
 - mtl
 - optparse-applicative
+- QuickCheck
 - random
 - time
 - transformers
-- QuickCheck
+- vector
 - wide-word
 - word8
 

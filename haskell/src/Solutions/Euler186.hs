@@ -18,7 +18,7 @@ laggedFib = runST $ do
     getElems arr
 
 -- Roots have parent equal to their index in array and size is up to date only for them
-data Node = Node { parent :: Int, size :: Int}
+data Node = Node { parent :: !Int, size :: !Int }
 emptyNode n = Node n 1
 
 nodeFind :: STArray s Int Node -> Int -> ST s Node

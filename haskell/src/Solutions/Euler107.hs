@@ -37,12 +37,10 @@ getSaving (n, edges') = runST $ do
             yRoot <- find y
             xRank <- readArray rank xRoot
             yRank <- readArray rank yRoot
-            if xRank > yRank
-                then writeArray parent yRoot (Just xRoot)
-                else if yRank > xRank
-                    then writeArray parent xRoot (Just yRoot)
-                    else when (xRoot /= yRoot)
-                              (writeArray parent yRoot (Just xRoot) >> writeArray rank xRoot (xRank + 1))
+            case compare xRank yRank of
+                LT -> writeArray parent xRoot (Just yRoot)
+                EQ -> when (xRoot /= yRoot) (writeArray parent yRoot (Just xRoot) >> writeArray rank xRoot (xRank + 1))
+                GT -> writeArray parent yRoot (Just xRoot)
     forM_ (sortBy cmpEdge edges') $ \((b, e), w) -> ifteM ((==) <$> find b <*> find e)
                                                           (modifySTRef' ans (+w))
                                                           (b `union` e)

@@ -1,10 +1,9 @@
 module Solutions.Euler045 where
-import qualified Data.Set as Set
+import Utils.List(ascendingIntersection)
 
-setGen f = Set.fromAscList $ map f [1..999999]
-tri = setGen (\x -> x * (x + 1) `div` 2) 
-pen = setGen (\x -> x * (3 * x - 1) `div` 2) 
-hex = setGen (\x -> x * (2 * x - 1))
+tri = map (\x -> x * (x + 1) `div` 2) [286..]
+pen = map (\x -> x * (3 * x - 1) `div` 2) [166..]
+hex = map (\x -> x * (2 * x - 1)) [144..]
 
 euler045 :: IO String
-euler045 = return $ show . last . Set.toList $ tri `Set.intersection` pen `Set.intersection` hex
+euler045 = return $ show $ head $ tri `ascendingIntersection` pen `ascendingIntersection` hex

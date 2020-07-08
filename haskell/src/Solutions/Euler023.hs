@@ -10,4 +10,5 @@ abundant :: [Int]
 abundant = filter (\n -> sum (divisors n) > n) [1..bound]
 
 euler023 :: IO String
-euler023 = return $ show $ sum $ Set.toList $ Set.fromList [1..bound] Set.\\ Set.fromList (listPlus abundant abundant)
+euler023 = return $ show $ sum $ Set.toList
+         $ Set.fromList [1..bound] Set.\\ Set.fromList (listPlus abundant abundant)

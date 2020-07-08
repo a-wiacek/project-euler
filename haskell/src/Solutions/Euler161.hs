@@ -57,10 +57,6 @@ triominoesOnCell cell =
     , [cell, yplus cell, xminus $ yplus cell]
     , [cell, yplus cell, xplus $ yplus cell]
     , [cell, yminus cell, xplus $ yminus cell]
-    , [cell, yminus cell, xminus $ yminus cell]
-    , [cell, yminus cell, xminus $ yminus cell]
-    , [cell, yminus cell, xminus $ yminus cell]
-    , [cell, yminus cell, xminus $ yminus cell]
     , [cell, yminus cell, xminus $ yminus cell] ]
 
 tryToFit :: Board -> Triomino -> Maybe Board

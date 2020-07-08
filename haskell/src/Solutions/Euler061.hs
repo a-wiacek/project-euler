@@ -1,5 +1,6 @@
 module Solutions.Euler061 where
 import Data.List
+import Debug.Trace
 
 fourDigits :: [Int] -> [Int]
 fourDigits = takeWhile (<10000) . dropWhile (<1000)

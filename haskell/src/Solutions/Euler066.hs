@@ -1,6 +1,7 @@
 module Solutions.Euler066 where
 import Solutions.Euler064(cont)
 import Solutions.Euler065(approxs)
+import Utils.List(maxBy)
 import Data.List
 import Data.Ratio
 
@@ -10,7 +11,6 @@ minimumX n = (n, numerator $ head $ dropWhile (isBad n) $ approxs infrac)
           infrac = h : cycle t
 
 numbers = [2..1000] \\ map (^2) [2..31]
-max' (a, b) (c, d) = if b > d then (a, b) else (c, d)
 
 euler066 :: IO String
-euler066 = return $ show $ fst $ foldr1 max' $ map minimumX numbers
+euler066 = return $ show $ fst $ maxBy snd $ map minimumX numbers

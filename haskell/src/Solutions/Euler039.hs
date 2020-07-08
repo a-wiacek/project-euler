@@ -1,4 +1,5 @@
 module Solutions.Euler039 where
+import Utils.List(maxBy)
 
 countSolutions n = (n, sols) where
     sols = length [() | a <- [1..n - 1],
@@ -6,7 +7,5 @@ countSolutions n = (n, sols) where
                         let c = n - a - b,
                         a * a + b * b == c * c]
 
-max' (a, b) (c, d) = if b > d then (a, b) else (c, d)
-
 euler039 :: IO String
-euler039 = return $ show $ fst $ foldr1 max' $ map countSolutions [1..1000]
+euler039 = return $ show $ fst $ maxBy snd $ map countSolutions [1..1000]

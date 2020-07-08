@@ -262,6 +262,7 @@ import Solutions.Euler662(euler662)
 import Solutions.Euler668(euler668)
 import Solutions.Euler684(euler684)
 import Solutions.Euler686(euler686)
+import Solutions.Euler698(euler698)
 
 eulers :: [(Int, IO String)]
 eulers =
@@ -526,6 +527,7 @@ eulers =
     , (668, euler668)
     , (684, euler684)
     , (686, euler686)
+    , (698, euler698)
     ]
 
 getEuler :: Int -> Maybe (IO String)

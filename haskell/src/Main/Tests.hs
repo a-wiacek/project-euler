@@ -19,10 +19,10 @@ createSpecFile problemNo answer = writeFile filepath fileContent where
 
 generateTests :: IO ()
 generateTests =
-    let filepath = joinPath ["txt", "answers.txt"]
+    let filepath = joinPath ["..", "txt", "answers.txt"]
         dirpath = joinPath ["test", "Solutions"]
     in doesFileExist filepath >>= \p -> if not p
-        then print "File answers.txt not found in txt directory" >> exitFailure
+        then putStrLn "File answers.txt not found in txt directory" >> exitFailure
         else do removeDirectoryRecursive dirpath
                 createDirectoryIfMissing True dirpath
                 filter (not . null . snd) . zip [1..] . lines <$> readFile filepath >>= 

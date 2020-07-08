@@ -9,12 +9,13 @@ twoSubsets :: [a] -> [([a], [a])]
 twoSubsets = filter (\(x, y) -> not (null x) && not (null y)) . twoSubsets'
 
 p :: [Int] -> [Int] -> Bool
-p l1 l2 | length l1 > length l2 = sum l1 > sum l2
-        | length l1 < length l2 = sum l1 < sum l2
-        | otherwise = True
+p l1 l2 = case compare (length l1) (length l2) of
+    LT -> sum l1 < sum l2
+    EQ -> sum l1 /= sum l2
+    GT -> sum l1 > sum l2
 
 testSet :: [Int] -> Bool
-testSet l = and [sum b /= sum c && p b c | (b, c) <- twoSubsets l]
+testSet l = and [p b c | (b, c) <- twoSubsets l]
 
 bound = 50
 min' (a, b) (c, d) = if a < c then (a, b) else (c, d)

@@ -24,8 +24,10 @@ module Utils.List
     , interweave
     , picks
     , permutations
+    , maxBy
     ) where
-import Data.List(groupBy, sort)
+import Data.List(groupBy, maximumBy, sort)
+import Data.Function(on)
 
 -- Given list of elements, reduce it to pair (first element, length).
 -- Usually this is used to reduce list with all elements equal.
@@ -210,3 +212,7 @@ picks [] = []
 permutations :: [a] -> [[a]]
 permutations [] = [[]]
 permutations l = [h:t | (h, ts) <- picks l, t <- permutations ts]
+
+-- Combination of maximumBy, compare and on functions.
+maxBy :: Ord b => (a -> b) -> [a] -> a
+maxBy f = maximumBy (compare `on` f)

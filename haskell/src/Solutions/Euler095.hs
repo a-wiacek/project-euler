@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleContexts, LambdaCase #-}
 module Solutions.Euler095 where
 import Utils.Array(modifyArray)
-import Utils.List(reduceList)
+import Utils.List(maxBy, reduceList)
 import Solutions.Euler078(pentagonal)
 import Control.Monad
 import Control.Monad.ST
@@ -78,7 +78,6 @@ divisorsCycles = runSTArray $ do
 justCycle :: [VertexState] -> [Int]
 justCycle l = [n | Cycle n <- l]
 
-max' (a, b) (c, d) = if b > d then (a, b) else (c, d)
-
 euler095 :: IO String
-euler095 = return $ show $ fst $ foldr1 max' $ map reduceList $ group $ sort $ justCycle $ elems divisorsCycles
+euler095 = return $ show $ fst $ maxBy snd $ map reduceList
+         $ group $ sort $ justCycle $ elems divisorsCycles

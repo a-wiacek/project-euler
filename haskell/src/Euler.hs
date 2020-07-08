@@ -1,5 +1,7 @@
 {-# LANGUAGE LambdaCase #-}
+
 module Euler(runEuler) where
+
 import Main.Generate
 import Main.Options
 import Main.Simulate

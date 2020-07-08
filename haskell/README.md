@@ -15,6 +15,6 @@ Usage:
 * `stack exec euler -- (-d|--delete N)`
 
   Reverse action done by `--generate`.
-* `stack exec euler --  (-s|--simulate N)`
+* `stack exec euler -- (-s|--simulate N)`
 
   Run simulation associated with problem N (creating such simulation is a manual process consisting of writing code in `src/Simulations/EulerN.hs` and adding import to `src/Main/Simulate.hs`).

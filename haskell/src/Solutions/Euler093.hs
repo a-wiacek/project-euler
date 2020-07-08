@@ -1,4 +1,5 @@
 module Solutions.Euler093 where
+import Utils.List(maxBy)
 import Utils.Operators((<:>))
 import Control.Monad
 import Data.Char
@@ -20,7 +21,6 @@ evalExp :: Exp Double -> Maybe Int
 evalExp e = do e' <- evalExp' e
                guard $ e' == fromInteger (round e') && e' > 0
                return $ floor e'
-
 
 opsProd :: Int -> [[MatOp]]
 opsProd k = forM [1..k] $ const [Add, Sub, Mul, Div]
@@ -45,7 +45,7 @@ allDigits = [[a, b, c, d] |
     c <- [b + 1..9],
     d <- [c + 1..9]]
 
-checkScore = checkScore' 0 .  map head . group . sort . catMaybes where
+checkScore = checkScore' 0 . map head . group . sort . catMaybes where
     checkScore' score [] = score
     checkScore' score (h:t) = if score + 1 == h
         then checkScore' (score + 1) t
@@ -54,7 +54,5 @@ checkScore = checkScore' 0 .  map head . group . sort . catMaybes where
 evalAll :: [(Int, String)]
 evalAll = map (checkScore . exprs <:> map intToDigit) allDigits
 
-max' (a, b) (c, d) = if a > c then (a, b) else (c, d)
-
 euler093 :: IO String
-euler093 = return $ snd $ foldr1 max' evalAll
+euler093 = return $ snd $ maxBy fst evalAll

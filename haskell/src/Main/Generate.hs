@@ -33,7 +33,7 @@ writeEulersFile = writeFile eulersPath
 insertImport :: Int -> [String] -> [String]
 insertImport problemNo imports =
     -- line template: import Solutions.EulerXYZ(eulerXYZ)
-    let prefixLen = length "import Solutions.Euler" :: Int
+    let prefixLen = length "import Solutions.Euler"
         isLowerImport i = read (take 3 $ drop prefixLen i) < problemNo
         (lowerImports, higherImports) = span isLowerImport imports
     in lowerImports ++ thisImport problemNo : higherImports
@@ -66,11 +66,11 @@ deleteEulersEntry :: Int -> IO ()
 deleteEulersEntry problemNo = do
     (header, imports, eulersDecl, eulerEntries, getEulerDecl) <- readEulersFile
     let newFileContent = unlines $ concat
-                         [ header
-                         , deleteImport problemNo imports
-                         , eulersDecl
-                         , deleteEntry problemNo eulerEntries
-                         , getEulerDecl ]
+                        [ header
+                        , deleteImport problemNo imports
+                        , eulersDecl
+                        , deleteEntry problemNo eulerEntries
+                        , getEulerDecl ]
     writeEulersFile newFileContent
 
 addEulerFile :: Int -> IO ()
@@ -88,10 +88,13 @@ generate :: Int -> IO ()
 generate problemNo = if problemNo > 0 && problemNo < 1000
     then doesFileExist (solutionPath problemNo) >>= \fileExists -> if fileExists
         then printf "File Euler%03d.hs already exists, aborting" problemNo >> exitFailure
-        else generateEulersEntry problemNo >> addEulerFile problemNo >>
-             printf "Successfully generated Euler%03d.hs and corresponding entries" problemNo
+        else do generateEulersEntry problemNo
+                addEulerFile problemNo
+                printf "Successfully generated Euler%03d.hs and corresponding entries" problemNo
     else putStrLn "Number must be between 1 and 999" >> exitFailure
 
 ungenerate :: Int -> IO ()
-ungenerate problemNo = deleteEulersEntry problemNo >> removeEulerFile problemNo >>
-                       printf "Successfully deleted Euler%03d.hs and corresponding entries" problemNo
+ungenerate problemNo = do
+    deleteEulersEntry problemNo
+    removeEulerFile problemNo
+    printf "Successfully deleted Euler%03d.hs and corresponding entries" problemNo

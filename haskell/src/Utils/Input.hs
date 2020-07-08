@@ -4,10 +4,14 @@ module Utils.Input
     , getSolutionFromTex
     ) where
 import Text.Printf
-import System.FilePath
+import System.Directory
+import System.Environment
+import System.FilePath(joinPath)
 
 getFile :: FilePath -> Int -> IO String
-getFile ext problemNo = readFile $ joinPath ["..", ext, printf "Euler%03d.%s" problemNo ext]
+getFile ext problemNo = do
+    execPath <- getExecutablePath
+    readFile (joinPath [execPath, "..", "..", "..", "..", "..", "..", ext, printf "Euler%03d.%s" problemNo ext])
 
 getInput :: Int -> IO String
 getInput = getFile "in"

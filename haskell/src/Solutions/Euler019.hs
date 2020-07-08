@@ -1,5 +1,4 @@
 module Solutions.Euler019 where
-import Control.Monad.State
 
 dayInMonth :: Int -> Int -> Int
 dayInMonth month year
@@ -8,18 +7,17 @@ dayInMonth month year
     | year `mod` 4 == 0 = 29
     | otherwise = 28
 
-type Date = (Int, Int, Int, Int)
-addSunday, step :: Date -> Date
-addSunday (w, m, y, s) = (w, m, y, s + 1)
-step (w, m, y, s) = ((w + dayInMonth m y) `mod` 7, m', y', s) where
-    (m', y') = if m == 11 then (0, y + 1) else (m + 1, y)
+data Date = Date { weekday :: !Int, month :: !Int, year :: !Int }
                 
 -- Monday = 0, Tuesday = 1, ..., Sunday = 6
 -- January = 0, ..., December = 11
-loop :: State Date Int
-loop = get >>= \(weekday, _, year, sundays) -> if year == 2001
-        then return sundays
-        else when (weekday == 6) (modify addSunday) >> modify step >> loop
+
+step :: Date -> Date
+step (Date w m y) = Date ((w + dayInMonth m y) `mod` 7) m' y' where
+    (m', y') = if m == 11 then (0, y + 1) else (m + 1, y)
+
+query :: Date -> Int
+query = length . filter ((== 6) . weekday) . takeWhile ((<= 2000) . year) . iterate step
 
 euler019 :: IO String
-euler019 = return $ show $ evalState loop (1, 0, 1901, 0)
+euler019 = return $ show $ query $ Date 1 0 1901
