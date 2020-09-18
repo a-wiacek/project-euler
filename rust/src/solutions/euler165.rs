@@ -19,11 +19,12 @@ fn point_in_line(((xb, yb), (xe, ye)): Line, (xm, ym): Point) -> bool {
         }
     } else {
         let tx = (xm - xe) / (xb - xe);
-        in01(tx) && if yb == ye {
-            ym == ye
-        } else {
-            (tx - (ym - ye) / (yb - ye)).abs() < EPS
-        }
+        in01(tx)
+            && if yb == ye {
+                ym == ye
+            } else {
+                (tx - (ym - ye) / (yb - ye)).abs() < EPS
+            }
     }
 }
 
@@ -54,7 +55,7 @@ pub fn euler165() -> String {
     let lines: Vec<Line> = s
         .chunks(4)
         .map(|chunk| {
-            let f = |n| (chunk[n] % 500) as f64; 
+            let f = |n| (chunk[n] % 500) as f64;
             ((f(0), f(1)), (f(2), f(3)))
         })
         .collect();

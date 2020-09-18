@@ -11,8 +11,6 @@ getProd :: Prod -> K
 getProd (Prod (n, _)) = n
 leq :: Prod -> K -> Bool
 Prod (n, phi) `leq` s = n <= s
-isCandidate :: Prod -> Bool
-isCandidate (Prod (n, phi)) = n == 1 || (n - 1) `mod` (n - phi) == 0
 isValid :: Prod -> Bool
 isValid (Prod (n, phi)) = n - phi > 1 && (n - 1) `mod` (n - phi) == 0
 mulProd :: K -> Prod -> Prod

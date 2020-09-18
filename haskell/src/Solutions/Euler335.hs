@@ -13,7 +13,7 @@ sumM n =
     let f x = fastPowerMod x (n + 1) m
         Just inv2 = invertMod 2 m
         Just inv3 = invertMod 3 m
-    in (2 * (f 2 - 1) - (f 3 - 1) * inv2 +  (f 4 - 1) * inv3) `mod` m
+    in (2 * (f 2 - 1) - (f 3 - 1) * inv2 + (f 4 - 1) * inv3) `mod` m
 
 euler335 :: IO String
 euler335 = return $ show $ sumM $ 10^18

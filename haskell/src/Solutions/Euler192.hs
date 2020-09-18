@@ -3,12 +3,13 @@ import Data.Ratio
 import Utils.List(ascendingMinus)
 
 bestApprox bound n = go (0, 1) (1,0) where
+    distance (p, q) = abs ((p % q)^2 - n % 1)
     go low@(a, b) high@(c, d)
-      | q > bound = if distance low < distance high then low else high
-      | p * p > q * q * n = go low mid
-      | otherwise = go mid high
-         where mid@(p, q) = (a + c, b + d)
-               distance (p, q) = abs ((p % q)^2 - n % 1)
+        | q > bound = if distance low < distance high then low else high
+        | p * p > q * q * n = go low mid
+        | otherwise = go mid high
+        where mid@(p, q) = (a + c, b + d)
+               
 
 sumA :: Integer -> Integer -> Integer
 sumA n bound = sum $ map (snd . bestApprox bound) $ ascendingMinus [2..n] $ takeWhile (<=n) $ map (^2) [2..]

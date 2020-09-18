@@ -6,7 +6,7 @@ import Data.STRef
 {-
 Let x = 2^t, then we solve equation x^2 = x + k -> x^2 - x - k = 0
 We are interested only in positive solution, so x = (1 + sqrt (1 + 4k)) / 2,
-so k = ((2x - 1)^2 - 1)/4. If x is integer, k is also integer, since square of odd number is equal to 1 modulo 4.
+so k = ((2x - 1)^2 - 1) / 4. If x is integer, k is also integer, since square of odd number is equal to 1 modulo 4.
 -}
 
 isPower2 1 = True

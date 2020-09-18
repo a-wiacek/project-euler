@@ -1,6 +1,5 @@
 {-# LANGUAGE Strict #-}
 module Solutions.Euler287 where
-import Debug.Trace
 
 funF :: Int -> Int
 funF n = go bounds bounds where

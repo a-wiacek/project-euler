@@ -51,7 +51,7 @@ fn diagonal_max(table: &Vec<Vec<i64>>) -> i64 {
 }
 
 pub fn euler149() -> String {
-    let mut table_flat: Vec<i64> = Vec::new();
+    let mut table_flat: Vec<i64> = Vec::with_capacity(4000000);
     for k in 1..56 {
         table_flat.push(m(100003 - 200003 * k + 300007 * k * k * k));
     }

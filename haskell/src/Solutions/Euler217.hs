@@ -31,12 +31,10 @@ arr = array ((1, 0, False), (23, 207, True)) $ filter isValidI $ Map.assocs $ sn
 
 balanced' :: Integer -> Integer -> Integer
 balanced' n digitsSum
-    | even n = let (upperCount, upper) = arr ! (n `div` 2, digitsSum, False)
-                   (lowerCount, lower) = arr ! (n `div` 2, digitsSum, True)
-               in lowerCount * upper * 10^(n `div` 2) + upperCount * lower
-    | otherwise = let (upperCount, upper) = arr ! (n `div` 2, digitsSum, False)
-                      (lowerCount, lower) = arr ! (n `div` 2, digitsSum, True)
-                   in 10 * (lowerCount * upper * 10^(n `div` 2 + 1) + upperCount * lower) + lowerCount * upperCount * 45 * 10^(n `div` 2)
+    | even n = lowerCount * upper * 10^(n `div` 2) + upperCount * lower
+    | otherwise = 10 * (lowerCount * upper * 10^(n `div` 2 + 1) + upperCount * lower) + lowerCount * upperCount * 45 * 10^(n `div` 2)
+    where (upperCount, upper) = arr ! (n `div` 2, digitsSum, False)
+          (lowerCount, lower) = arr ! (n `div` 2, digitsSum, True)
 
 balanced :: Integer -> Integer
 balanced n = if n == 1 then 45 else sum $ map (balanced' n) [1..9 * (n `div` 2)]

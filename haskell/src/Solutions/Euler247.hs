@@ -1,4 +1,3 @@
-{-# LANGUAGE Strict #-}
 module Solutions.Euler247 where
 import qualified Data.Set as Set
 
@@ -6,15 +5,15 @@ type Coords = (Double, Double)
 type Index = (Int, Int)
 data Area = Area
     { -- Left bottom corner of area.
-      lbcorner :: Coords
+      lbcorner :: !Coords
       -- Index of to-be-produced square.
-    , areaIndex :: Index
+    , areaIndex :: !Index
       -- Precomputed value, if (x, y) == lbcorner, then (x + squareShift, y + squareShift)
       -- is right upper corner of to-be-produced square.
-    , squareShift :: Double 
+    , squareShift :: !Double 
     } deriving Eq
 instance Ord Area where compare a1 a2 = compare (squareShift a1) (squareShift a2)
-data Square = Square { num :: Int, squareIndex :: Index } deriving (Eq, Ord, Show)
+data Square = Square { num :: !Int, squareIndex :: !Index } deriving (Eq, Ord)
 
 -- Positive solution t to (x + t)(y + t) = 1
 mkSquareShift :: Coords -> Double
@@ -31,7 +30,7 @@ splitArea a = (mkArea (x, y + t) (ix + 1, iy), mkArea (x + t, y) (ix, iy + 1))
 
 type State = (Set.Set Area, Set.Set Square)
 
---runSquares :: Int -> Int
+runSquares :: Int -> Int
 runSquares bound =
     let loop :: Int -> State -> State
         loop n s@(aSet, sqSet)

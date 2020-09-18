@@ -28,4 +28,4 @@ deBrujinSequences n =
     in map translate $ search [0]
 
 euler265 :: IO String
-euler265 = return $ show $ sum $ map bin2dec $ deBrujinSequences 5
+euler265 = return $ show $ sum $ map bin2dec $ deBrujinSequences 3

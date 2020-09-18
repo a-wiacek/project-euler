@@ -39,8 +39,9 @@ pub fn make_tests(_: TokenStream) -> TokenStream {
     solution_numbers()
         .into_iter()
         .map(|num| format!("#[test]
-            fn test_euler{:03}() {{ test_euler({}) }}
-        ", num, num))
+        fn test_euler{:03}() {{
+            assert_eq!(crate::solutions::euler{:03}::euler{:03}(), read_answer({}))
+        }}", num, num, num, num))
         .collect::<String>()
         .parse()
         .unwrap()

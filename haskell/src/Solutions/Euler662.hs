@@ -23,7 +23,7 @@ funF width height =
     in runST $ do
         arr <- newArray ((0, 0), (width, height)) 0 :: ST s (STUArray s (W, W) W)
         writeArray arr (0, 0) 1
-        forM_ paths $ \(dx, dy) -> forM_ [0..width] $ \x -> forM_ [0..height] $ \y ->
+        forM_ [0..width] $ \x -> forM_ [0..height] $ \y -> forM_ paths $ \(dx, dy) ->
             when (x >= dx && y >= dy) $ readArray arr (x - dx, y - dy) >>= modifyArray arr (x, y) . plus
         readArray arr (width, height)
 

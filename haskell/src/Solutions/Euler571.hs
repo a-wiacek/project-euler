@@ -2,7 +2,7 @@ module Solutions.Euler571 where
 import Utils.List(permutations)
 import Utils.Numeric(digitsInBase)
 
--- Execution time: 2208.0214899s
+-- Execution time: 2208.0214899s (but only 160.29157382s in Rust!)
 
 base = 12
 

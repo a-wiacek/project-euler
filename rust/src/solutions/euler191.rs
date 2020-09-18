@@ -23,7 +23,7 @@ fn count(length: usize, ls_used: usize, as_used: usize) -> usize {
             (1, 0) => p00 + p01 + p02 + p10 + p11 + p12,
             (1, 1) => p10,
             (1, 2) => p11,
-            _ => panic!()
+            _ => panic!(),
         }
     }
 }

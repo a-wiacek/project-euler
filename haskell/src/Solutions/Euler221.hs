@@ -2,7 +2,6 @@ module Solutions.Euler221 where
 import Utils.List(uniques)
 import Utils.NumberTheory(divisors)
 
--- http://oeis.org/A147811
 alexandrian :: Int -> [Integer]
 alexandrian n = uniques $ do
     p' <- [1..n]

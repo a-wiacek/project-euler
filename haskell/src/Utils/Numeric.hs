@@ -112,7 +112,7 @@ binsearch f = bf where
                 where mid = (low + high + 1) `div` 2
 
 -- Perform iterations of bisection method. It is assumed that l < h
--- and signum l /= signum h.
+-- and signum (f l) /= signum (f h).
 bisection :: (Fractional a, Eq b, Num b) => (a -> b) -> Int -> a -> a -> a
 bisection f iters l h = bs iters l (f l) h (f h) where
     bs 0 low _ high _ = (low + high) / 2

@@ -1,10 +1,12 @@
-use crate::utils::numeric::divisors::divisors;
+use crate::utils::numeric::divisors_with_sieve::divisors;
 
 pub fn euler095() -> String {
+    let sieve = primal::Sieve::new(1000000);
     let mut sum_of_divisors = vec![None];
     for n in 1..=1000000 {
-        sum_of_divisors
-            .push(Some(divisors(n).into_iter().sum::<usize>() - n).filter(|&s| s <= 1000000));
+        sum_of_divisors.push(
+            Some(divisors(&sieve, n).into_iter().sum::<usize>() - n).filter(|&s| s <= 1000000),
+        );
     }
     // sum_of_divisors[i] contains sum of divisors of i
     // (value will be changed to None after first use)

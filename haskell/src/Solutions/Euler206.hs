@@ -1,8 +1,7 @@
 module Solutions.Euler206 where
+import Utils.List(everyOther)
 
-everyOther (x:y:s) = x:everyOther s
-everyOther l = l
-isOK = (=="123456789") . everyOther . show . (^2)
+isOK = (=="123456789") . everyOther True . show . (^2)
 
 loop n | isOK (10 * n + 3) = 100 * n + 30
        | isOK (10 * n + 7) = 100 * n + 70

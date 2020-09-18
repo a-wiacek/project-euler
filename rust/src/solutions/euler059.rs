@@ -11,7 +11,6 @@ pub fn euler059() -> String {
         .map(|_| 'a' as u8..='z' as u8)
         .multi_cartesian_product()
         .find(|key| {
-            // println!("{:?}", key);
             encrypted_ascii
                 .iter()
                 .zip(key.iter().cycle())

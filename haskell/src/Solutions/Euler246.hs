@@ -1,4 +1,3 @@
-{-# LANGUAGE Strict #-}
 module Solutions.Euler246 where
 import Utils.Operators((<&&>))
 
@@ -15,7 +14,7 @@ Suppose that we're investigating point (px, py) outside of ellipse to find tange
 Then we have: px * cos t / 7500 + py * sin t / (2500 * sqrt 5) = 1
 -}
 
-data Circle = Circle { center :: (Int, Int), radius :: Int }
+data Circle = Circle { center :: !(Int, Int), radius :: !Int }
 f = fromIntegral :: Int -> Double
 
 dist (a, b) (x, y) = sqrt $ (a - x)^2 + (b - y)^2

@@ -9,7 +9,7 @@ fn laminae(mut l: i64, mut t: i64) -> i64 {
         } else {
             ans += 1;
             t += 1;
-        } 
+        }
     }
 }
 

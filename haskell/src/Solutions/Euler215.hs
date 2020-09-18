@@ -5,9 +5,10 @@ import Data.Array.ST
 
 compute :: Int -> Int -> Int
 compute bound maxH =
-    let walls = let walls' n | n > bound = []
-                             | n == bound = [[]]
-                             | otherwise = map (n + 2 :) (walls' (n + 2)) ++ map (n + 3 :) (walls' (n + 3))
+    let walls = let walls' n = case compare n bound of
+                        LT -> map (n + 2 :) (walls' (n + 2)) ++ map (n + 3 :) (walls' (n + 3))
+                        EQ -> [[]]
+                        GT -> []
                 in map init $ walls' 0
         l = length walls -- for bound = 32 it is 3329
         wallsArray :: Array Int [Int]
@@ -15,9 +16,10 @@ compute bound maxH =
         crack :: [Int] -> [Int] -> Bool
         crack [] _ = True
         crack _ [] = True
-        crack (h1:t1) (h2:t2) | h1 == h2 = False
-                              | h1 < h2 = crack t1 (h2:t2)
-                              | h1 > h2 = crack (h1:t1) t2
+        crack (h1 : t1) (h2 : t2) = case compare h1 h2 of
+            LT -> crack t1 (h2 : t2)
+            EQ -> False
+            GT -> crack (h1 : t1) t2
         correct :: Array Int [Int]
         correct = listArray (1, l) [filter (\y -> crack (wallsArray ! x) (wallsArray ! y)) [1..l] | x <- [1..l]]
         -- bricks (h, x) = number of valid walls of height h with (crack ! x) at the top

@@ -1,5 +1,5 @@
 use crate::utils::numeric::digits::Digits;
-use num::{BigInt, pow::Pow, Integer};
+use num::{pow::Pow, BigInt, Integer};
 
 pub fn euler168() -> String {
     let mut nums = Vec::<BigInt>::new();

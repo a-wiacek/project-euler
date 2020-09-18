@@ -1,6 +1,6 @@
 use num::{integer::ExtendedGcd, Integer};
 
-// Compute modulo inverse a^(-1) mod m
+// Compute modulo inverse a^(-1) mod m.
 
 pub trait InvertMod: Sized {
     fn invert_mod(&self, other: &Self) -> Option<Self>;

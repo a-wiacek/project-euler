@@ -6,9 +6,14 @@ pub mod utils {
     pub mod itertools;
     pub mod numeric {
         pub mod binsearch;
+        pub mod bisection;
         pub mod digits;
         pub mod divisors;
+        pub mod divisors_with_sieve;
         pub mod factorial;
+        pub mod factorization;
+        pub mod linear_recurrence_relation;
+        pub mod modpow;
         pub mod sequences {
             pub mod continued_fractions {
                 pub mod approximations;
@@ -25,6 +30,7 @@ pub mod utils {
         }
     }
     pub mod number_theory {
+        pub mod chinese_remainder;
         pub mod invert_mod;
         pub mod radical;
         pub mod totient;
@@ -196,20 +202,103 @@ pub mod solutions {
     pub mod euler181;
     pub mod euler182;
     pub mod euler183;
+    pub mod euler186;
+    pub mod euler187;
     pub mod euler188;
+    pub mod euler189;
     pub mod euler190;
     pub mod euler191;
+    pub mod euler192;
+    pub mod euler193;
+    pub mod euler196;
     pub mod euler197;
+    pub mod euler201;
+    pub mod euler202;
+    pub mod euler203;
+    pub mod euler204;
+    pub mod euler205;
+    pub mod euler206;
+    pub mod euler207;
+    pub mod euler211;
+    pub mod euler214;
+    pub mod euler215;
+    pub mod euler216;
+    pub mod euler217;
+    pub mod euler218;
+    pub mod euler221;
+    pub mod euler225;
+    pub mod euler231;
+    pub mod euler233;
+    pub mod euler235;
+    pub mod euler237;
+    pub mod euler243;
+    pub mod euler244;
+    pub mod euler245;
+    pub mod euler246;
+    pub mod euler247;
+    pub mod euler260;
+    pub mod euler265;
+    pub mod euler267;
+    pub mod euler271;
+    pub mod euler272;
     pub mod euler274;
     pub mod euler277;
     pub mod euler278;
     pub mod euler282;
+    pub mod euler285;
     pub mod euler286;
+    pub mod euler287;
     pub mod euler291;
+    pub mod euler301;
+    pub mod euler303;
+    pub mod euler304;
+    pub mod euler306;
+    pub mod euler307;
+    pub mod euler312;
+    pub mod euler313;
+    pub mod euler315;
+    pub mod euler320;
+    pub mod euler321;
+    pub mod euler323;
+    pub mod euler324;
+    pub mod euler335;
+    pub mod euler336;
+    pub mod euler342;
+    pub mod euler343;
+    pub mod euler345;
+    pub mod euler346;
+    pub mod euler347;
+    pub mod euler348;
+    pub mod euler349;
+    pub mod euler353;
+    pub mod euler357;
+    pub mod euler358;
+    pub mod euler365;
+    pub mod euler377;
+    pub mod euler381;
+    pub mod euler393;
+    pub mod euler475;
+    pub mod euler493;
+    pub mod euler504;
+    pub mod euler510;
     pub mod euler512;
+    pub mod euler531;
+    pub mod euler540;
+    pub mod euler571;
+    pub mod euler587;
+    pub mod euler601;
+    pub mod euler610;
     pub mod euler613;
+    pub mod euler618;
     pub mod euler622;
     pub mod euler623;
+    pub mod euler643;
+    pub mod euler650;
+    pub mod euler662;
+    pub mod euler668;
+    pub mod euler684;
+    pub mod euler686;
+    pub mod euler698;
 }
 
 project_euler_rust_macros::make_choose_euler_fun!();
@@ -263,10 +352,6 @@ mod tests {
             .nth(line - 1)
             .unwrap()
             .to_string()
-    }
-
-    fn test_euler(num: usize) {
-        assert_eq!(crate::choose_euler_fun(num)(), read_answer(num))
     }
 
     project_euler_rust_macros::make_tests!();

@@ -11,11 +11,6 @@ sumOfDigits n p = if n == 0 then 0 else n `rem` p + sumOfDigits (n `quot` p) p
 primesInFactorial n p = (n - sumOfDigits n p) `quot` (p - 1)
 checkFac n p k = if primesInFactorial n p >= k then n else checkFac (n - n `rem` p + p) p k
 inverse p k = let n = k * (p - 1) in checkFac n p k
-         
-findLowest :: Int -> Int
-findLowest n = maximum
-             $ map (\p' -> let p = unPrime p' in inverse p $ primesInFactorial n p * 1234567890)
-             $ primesUpTo n
 
 compute :: Int
 compute = runST $ do

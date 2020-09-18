@@ -1,18 +1,17 @@
-use std::cmp::Ordering;
-
-// Find union data structure. Vertices are indexed from 0.
+// Find-union data structure. Vertices are indexed from 0.
+// Nodes keep information about size (number of nodes in connected component).
 
 #[derive(Clone)]
 struct Node {
     parent: Option<usize>,
-    rank: usize,
+    size: usize,
 }
 
 impl Node {
     fn new() -> Node {
         Node {
             parent: None,
-            rank: 0,
+            size: 1,
         }
     }
 }
@@ -34,6 +33,7 @@ impl FindUnion {
             Some(parent) => {
                 let root = self.find(parent);
                 self.nodes[x].parent = Some(root);
+                self.nodes[x].size = self.nodes[root].size;
                 root
             }
         }
@@ -42,17 +42,19 @@ impl FindUnion {
     pub fn union(&mut self, x: usize, y: usize) {
         let root_x = self.find(x);
         let root_y = self.find(y);
-        let rank_x = self.nodes[x].rank;
-        let rank_y = self.nodes[y].rank;
-        match rank_x.cmp(&rank_y) {
-            Ordering::Less => self.nodes[root_x].parent = Some(root_y),
-            Ordering::Equal => {
-                if root_x != root_y {
-                    self.nodes[root_y].parent = Some(root_x);
-                    self.nodes[root_x].rank += 1;
-                }
+        if root_x != root_y {
+            if self.nodes[root_x].size > self.nodes[root_y].size {
+                self.nodes[root_y].parent = Some(root_x);
+                self.nodes[root_x].size += self.nodes[root_y].size;
+            } else {
+                self.nodes[root_x].parent = Some(root_y);
+                self.nodes[root_y].size += self.nodes[root_x].size;
             }
-            Ordering::Greater => self.nodes[root_y].parent = Some(root_x),
         }
+    }
+
+    pub fn size(&mut self, x: usize) -> usize {
+        let root = self.find(x);
+        self.nodes[root].size
     }
 }
