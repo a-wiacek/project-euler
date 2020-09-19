@@ -24,16 +24,13 @@ pub fn euler377() -> String {
         }
     });
     let p = 1_000_000_000;
-    let f = |n: usize| if n <= 9 {
-        initial_values[9 - n]
-    } else {
-        (&matrix_pow_mod(recurrence_matrix.clone(), n - 9, p) * &initial_values)[0] % p
+    let f = |n: usize| {
+        if n <= 9 {
+            initial_values[9 - n]
+        } else {
+            (&matrix_pow_mod(recurrence_matrix.clone(), n - 9, p) * &initial_values)[0] % p
+        }
     };
-    println!("{:?}", &initial_values);
-    println!("{:?}", &recurrence_matrix);
-    for i in 1..16 {
-        println!("{} {}", i, f(i));
-    }
     std::iter::successors(Some(13), |i| i.checked_mul(&13))
         .take(17)
         .map(f)

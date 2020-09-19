@@ -5,10 +5,13 @@ fn count_products(sieve: &Sieve, max_prime: usize, max_product: usize) -> usize 
     let mut prods = vec![1];
     let mut ans = 1;
     for p in sieve.primes_from(0).take_while(|p| p <= &max_prime) {
-        prods = prods.into_iter().flat_map(|prod| {
-            successors(Some(prod), |&prod| Some(prod * p))
-                .take_while(|&prod| prod * p <= max_product)
-        }).collect();
+        prods = prods
+            .into_iter()
+            .flat_map(|prod| {
+                successors(Some(prod), |&prod| Some(prod * p))
+                    .take_while(|&prod| prod * p <= max_product)
+            })
+            .collect();
         ans += prods.len();
     }
     ans

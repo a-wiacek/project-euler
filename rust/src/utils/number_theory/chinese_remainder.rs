@@ -1,5 +1,5 @@
 use crate::utils::number_theory::invert_mod::InvertMod;
-use num::{Integer, integer::ExtendedGcd};
+use num::{integer::ExtendedGcd, Integer};
 
 // Given two pairs (a, m) and (b, n), find a number x
 // such that 0 <= x < m * n, x % m = a and x % n = b.
@@ -7,7 +7,7 @@ use num::{Integer, integer::ExtendedGcd};
 
 pub fn chinese<T>(a: T, m: T, b: T, n: T) -> Option<T>
 where
-    T: Integer + Clone
+    T: Integer + Clone,
 {
     let ExtendedGcd { gcd, x, y, .. } = m.extended_gcd(&n);
     let rem = |a: T, b: T| {
@@ -21,7 +21,10 @@ where
     if gcd.is_one() {
         Some(rem(n.clone() * a * y + m.clone() * b * x, m * n))
     } else if (a.clone() - b.clone()).is_multiple_of(&gcd) {
-        Some(rem(n.clone() / gcd.clone() * a * y + m.clone() / gcd.clone() * b * x, m / gcd * n))
+        Some(rem(
+            n.clone() / gcd.clone() * a * y + m.clone() / gcd.clone() * b * x,
+            m / gcd * n,
+        ))
     } else {
         None
     }

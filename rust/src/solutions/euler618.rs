@@ -4,9 +4,7 @@ use std::cmp::Ordering;
 const P: usize = 1_000_000_000;
 
 pub fn euler618() -> String {
-    let fibs = Fibonacci::new(1, 2)
-        .take(23)
-        .collect::<Vec<usize>>();
+    let fibs = Fibonacci::new(1, 2).take(23).collect::<Vec<usize>>();
     let last_fib = *fibs.last().unwrap();
     let sieve = primal::Sieve::new(last_fib + 100);
     let p_max = (last_fib..).find(|&p| sieve.is_prime(p)).unwrap();
@@ -25,9 +23,6 @@ pub fn euler618() -> String {
             };
         }
     }
-    let ans = fibs.into_iter()
-        .map(|fib| s[0][fib])
-        .sum::<usize>()
-        % P;
+    let ans = fibs.into_iter().map(|fib| s[0][fib]).sum::<usize>() % P;
     ans.to_string()
 }

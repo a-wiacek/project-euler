@@ -22,10 +22,12 @@ pub fn euler365() -> String {
     let mut ans: i64 = 0;
     for &p in &primes {
         mod1p[p] = binom_mod(
-            BigInt::from(10u64.pow(18)), 
+            BigInt::from(10u64.pow(18)),
             BigInt::from(10u64.pow(9)),
-            &BigInt::from(p)
-        ).to_i64().unwrap();
+            &BigInt::from(p),
+        )
+        .to_i64()
+        .unwrap();
     }
     for &p in &primes {
         for &q in primes.iter().skip_while(|&&q| q <= p) {
@@ -34,7 +36,8 @@ pub fn euler365() -> String {
                     (mod1p[p], p as i64),
                     (mod1p[q], q as i64),
                     (mod1p[r], r as i64),
-                ]).unwrap();
+                ])
+                .unwrap();
             }
         }
     }

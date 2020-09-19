@@ -1,5 +1,5 @@
-use cached::proc_macro::cached;
 use crate::utils::numeric::modpow::ModPow;
+use cached::proc_macro::cached;
 use num::integer::binomial;
 
 const P: u64 = 1_000_000_007;
@@ -35,10 +35,7 @@ fn compute(n1: u8, n2: u8, n3: u8, n4: u8) -> u64 {
 
 // n < 1024
 fn solutions(n: u64) -> u64 {
-    (1..=n / 3).fold(1, |a, b| a * b % P)
-        .modpow(&(P - 2), &P)
-        * compute(0, 0, 0, (n / 4) as u8)
-        % P
+    (1..=n / 3).fold(1, |a, b| a * b % P).modpow(&(P - 2), &P) * compute(0, 0, 0, (n / 4) as u8) % P
 }
 
 pub fn euler475() -> String {

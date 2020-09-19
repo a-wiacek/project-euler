@@ -1,7 +1,11 @@
 pub fn euler345() -> String {
     let input: Vec<Vec<u16>> = crate::utils::input::get_input(345)
         .lines()
-        .map(|line| line.split_whitespace().map(|num| num.parse().unwrap()).collect())
+        .map(|line| {
+            line.split_whitespace()
+                .map(|num| num.parse().unwrap())
+                .collect()
+        })
         .collect();
     let n = input.len();
     let mut f = vec![vec![0; 1 << n]; n + 1];
