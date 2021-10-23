@@ -117,18 +117,18 @@ impl GameState {
     }
 
     fn interpret_card(&mut self, &card: &Card) {
-        match card {
-            Card::Go => self.go_to_square(&SQUARE_GO),
-            Card::Jail => self.go_to_square(&SQUARE_JAIL),
-            Card::C1 => self.go_to_square(&SQUARE_C1),
-            Card::E3 => self.go_to_square(&SQUARE_E3),
-            Card::H2 => self.go_to_square(&SQUARE_H2),
-            Card::R1 => self.go_to_square(&SQUARE_R1),
-            Card::NextR => self.go_to_square(&next_r(&self.position)),
-            Card::NextU => self.go_to_square(&next_u(&self.position)),
-            Card::Back3 => self.go_to_square(&(self.position + 37)), // -3 == +37 mod 40
-            Card::Null => self.go_to_square(&self.position.clone()),
-        }
+        self.go_to_square(match card {
+            Card::Go => &SQUARE_GO,
+            Card::Jail => &SQUARE_JAIL,
+            Card::C1 => &SQUARE_C1,
+            Card::E3 => &SQUARE_E3,
+            Card::H2 => &SQUARE_H2,
+            Card::R1 => &SQUARE_R1,
+            Card::NextR => &next_r(&self.position),
+            Card::NextU => &next_u(&self.position),
+            Card::Back3 => &(self.position + 37), // -3 == +37 mod 40
+            Card::Null => &self.position.clone(),
+        })
     }
 
     fn draw_community_card(&mut self) {
