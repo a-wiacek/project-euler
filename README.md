@@ -1,7 +1,7 @@
 # Project Euler
 
 Collection of solutions to Project Euler problems written in Haskell and Rust.
-One day, other languages might appear here.
+One day, other languages (such as Clojure) might appear here, at least for a few problems.
 
 ## Performance (Haskell vs Rust)
 

@@ -3,4 +3,15 @@ haskell/project-euler.cabal
 haskell/test/Solutions
 haskell/!test/Solutions/.keep
 rust/target/
+clojure/target/
+clojure/classes/
+clojure/checkouts/
+clojure/profiles.clj
+clojure/pom.xml
+clojure/pom.xml.asc
+clojure/*.jar
+clojure/*.class
+clojure/.lein-*
+clojure/.nrepl-port
+clojure/.prepl-port
 *~
